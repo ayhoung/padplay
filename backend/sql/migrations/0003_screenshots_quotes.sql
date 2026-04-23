@@ -1,0 +1,4 @@
+ALTER TABLE games
+  ADD COLUMN IF NOT EXISTS screenshots    TEXT[]      NOT NULL DEFAULT '{}',
+  ADD COLUMN IF NOT EXISTS quotes         JSONB       NOT NULL DEFAULT '[]',
+  ADD COLUMN IF NOT EXISTS price_updated_at TIMESTAMPTZ;
