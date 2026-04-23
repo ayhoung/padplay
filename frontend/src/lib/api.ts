@@ -4,12 +4,15 @@ import type {
   GameCategory,
   GameSort,
   GamesResponse,
+  PendingSubmission,
   PlatformFilter,
+  SubmissionCreateRequest,
+  SubmissionEnrichPreview,
 } from "@padplay/shared-types";
 
 const API_BASE = process.env.BACKEND_URL ?? "http://localhost:6004";
 
-async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
+async function apiGet<T>(path: string, init?: RequestInit): Promise<{ data: T; total: number }> {
   const res = await fetch(`${API_BASE}${path}`, {
     ...init,
     headers: { Accept: "application/json", ...(init?.headers ?? {}) },
@@ -18,7 +21,15 @@ async function apiGet<T>(path: string, init?: RequestInit): Promise<T> {
   if (!res.ok) {
     throw new Error(`API ${path} → ${res.status} ${res.statusText}`);
   }
-  return (await res.json()) as T;
+  const totalHeader = res.headers.get("x-total-count");
+  const total = totalHeader ? Number(totalHeader) : 0;
+  const data = (await res.json()) as T;
+  return { data, total };
+}
+
+export interface PaginatedGames {
+  games: GamesResponse;
+  total: number;
 }
 
 export async function fetchGames(opts: {
@@ -26,24 +37,98 @@ export async function fetchGames(opts: {
   platform?: PlatformFilter;
   sort?: GameSort;
   limit?: number;
-} = {}): Promise<GamesResponse> {
+  offset?: number;
+} = {}): Promise<PaginatedGames> {
   const params = new URLSearchParams();
   if (opts.category) params.set("category", opts.category);
   if (opts.platform) params.set("platform", opts.platform);
   if (opts.sort) params.set("sort", opts.sort);
   if (opts.limit) params.set("limit", String(opts.limit));
+  if (opts.offset) params.set("offset", String(opts.offset));
   const qs = params.toString();
-  return apiGet<GamesResponse>(`/api/games${qs ? `?${qs}` : ""}`);
+  const { data, total } = await apiGet<GamesResponse>(`/api/games${qs ? `?${qs}` : ""}`);
+  return { games: data, total };
 }
 
 export async function fetchGame(slug: string): Promise<Game | null> {
   try {
-    return await apiGet<Game>(`/api/games/${encodeURIComponent(slug)}`);
+    const { data } = await apiGet<Game>(`/api/games/${encodeURIComponent(slug)}`);
+    return data;
   } catch {
     return null;
   }
 }
 
 export async function fetchCategories(): Promise<CategoriesResponse> {
-  return apiGet<CategoriesResponse>("/api/categories");
+  const { data } = await apiGet<CategoriesResponse>("/api/categories");
+  return data;
+}
+
+// -------------- Submissions --------------
+
+export async function previewSubmission(
+  urls: { appStoreUrl?: string; playStoreUrl?: string },
+): Promise<SubmissionEnrichPreview> {
+  const res = await fetch(`/api/submissions/preview`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(urls),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Preview failed");
+  return data as SubmissionEnrichPreview;
+}
+
+export async function createSubmission(
+  body: SubmissionCreateRequest,
+): Promise<{ id: number; status: string; message: string }> {
+  const res = await fetch(`/api/submissions`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Submission failed");
+  return data;
+}
+
+// -------------- Admin --------------
+
+export async function fetchSubmissions(
+  token: string,
+  status: "pending" | "approved" | "rejected" | "all" = "pending",
+): Promise<PendingSubmission[]> {
+  const res = await fetch(`/api/admin/submissions?status=${status}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Load failed");
+  return data as PendingSubmission[];
+}
+
+export async function approveSubmission(
+  token: string,
+  id: number,
+): Promise<{ slug: string; url: string }> {
+  const res = await fetch(`/api/admin/submissions/${id}/approve`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Approve failed");
+  return data;
+}
+
+export async function rejectSubmission(
+  token: string,
+  id: number,
+  reason: string,
+): Promise<void> {
+  const res = await fetch(`/api/admin/submissions/${id}/reject`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ reason }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Reject failed");
 }

@@ -4,18 +4,35 @@ import cors from "cors";
 import { healthRouter } from "./routes/health";
 import { gamesRouter } from "./routes/games";
 import { categoriesRouter } from "./routes/categories";
+import {
+  submissionsRouter,
+  listSubmissions,
+  approveSubmission,
+  rejectSubmission,
+} from "./routes/submissions";
+import { requireAdmin } from "./middleware/admin";
 import { errorHandler, notFoundHandler } from "./middleware/errors";
 
 const app = express();
 const PORT = Number(process.env.PORT ?? 6004);
 const CORS_ORIGIN = process.env.CORS_ORIGIN ?? "http://localhost:6003";
 
+app.set("trust proxy", true); // behind nginx — honor X-Forwarded-For for rate limiting
 app.use(cors({ origin: CORS_ORIGIN.split(",").map((s) => s.trim()) }));
-app.use(express.json());
+app.use(express.json({ limit: "64kb" }));
 
 app.use("/api/health", healthRouter);
 app.use("/api/games", gamesRouter);
 app.use("/api/categories", categoriesRouter);
+app.use("/api/submissions", submissionsRouter);
+
+// Admin routes — all gated by requireAdmin
+const adminRouter = express.Router();
+adminRouter.use(requireAdmin);
+adminRouter.get("/submissions", listSubmissions);
+adminRouter.post("/submissions/:id/approve", approveSubmission);
+adminRouter.post("/submissions/:id/reject", rejectSubmission);
+app.use("/api/admin", adminRouter);
 
 app.use(notFoundHandler);
 app.use(errorHandler);

@@ -1,6 +1,3 @@
-const ISSUE_URL =
-  "https://github.com/ayhoung/padplay/issues/new?title=Game%20suggestion%3A%20&body=Game%20title%3A%0AStore%20link%3A%0AWhy%20it%20belongs%20on%20PadPlay%3A%0A";
-
 interface SubmitCtaProps {
   compact?: boolean;
 }
@@ -17,15 +14,13 @@ export function SubmitCta({ compact = false }: SubmitCtaProps) {
           Know a great tablet game we missed?
         </h2>
         <p className="mt-2 text-sm leading-6 text-slate-700">
-          Submit it through GitHub and include the store link. That gives us a
-          lightweight review queue without adding a new backend form flow.
+          Send it through the submission flow with the store link and a few
+          notes on why it deserves a tablet-first spot.
         </p>
       </div>
       <div className="mt-4 flex flex-wrap gap-3">
         <a
-          href={ISSUE_URL}
-          target="_blank"
-          rel="noopener noreferrer"
+          href="/submit"
           className="inline-flex items-center justify-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700"
         >
           Suggest a game

@@ -11,7 +11,11 @@ export const metadata: Metadata = {
 };
 
 export default async function BestIpadGamesPage() {
-  const games = await fetchGames({ platform: "ios", sort: "score", limit: 24 });
+  const { games } = await fetchGames({
+    platform: "ios",
+    sort: "score",
+    limit: 24
+  });
 
   return (
     <SeoLandingPage

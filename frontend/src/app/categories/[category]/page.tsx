@@ -40,7 +40,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   if (!category) notFound();
 
   const config = categoryLandingConfigs[category];
-  const games = await fetchGames({ category, sort: "score", limit: 24 });
+  const { games } = await fetchGames({ category, sort: "score", limit: 24 });
 
   return (
     <SeoLandingPage

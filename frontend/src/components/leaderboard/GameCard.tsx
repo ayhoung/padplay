@@ -27,14 +27,20 @@ export function GameCard({ game, rank }: Props) {
           {rank}
         </span>
         {game.iconUrl ? (
-          <Image
-            src={game.iconUrl}
-            alt=""
-            width={56}
-            height={56}
-            className="rounded-xl shadow-sm"
-            unoptimized
-          />
+          <Link
+            href={`/games/${game.slug}`}
+            className="rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+            aria-label={`${game.title} details`}
+          >
+            <Image
+              src={game.iconUrl}
+              alt=""
+              width={56}
+              height={56}
+              className="rounded-xl shadow-sm transition-transform hover:scale-105"
+              unoptimized
+            />
+          </Link>
         ) : (
           <div className="h-14 w-14 rounded-xl bg-slate-100" aria-hidden />
         )}

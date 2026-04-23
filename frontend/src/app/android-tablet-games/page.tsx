@@ -11,7 +11,7 @@ export const metadata: Metadata = {
 };
 
 export default async function AndroidTabletGamesPage() {
-  const games = await fetchGames({
+  const { games } = await fetchGames({
     platform: "android",
     sort: "score",
     limit: 24

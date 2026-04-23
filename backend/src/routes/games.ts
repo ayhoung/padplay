@@ -21,6 +21,7 @@ gamesRouter.get("/", async (req, res, next) => {
     const platformParam = typeof req.query.platform === "string" ? req.query.platform : undefined;
     const sortParam = typeof req.query.sort === "string" ? req.query.sort : "score";
     const limitParam = typeof req.query.limit === "string" ? parseInt(req.query.limit, 10) : NaN;
+    const offsetParam = typeof req.query.offset === "string" ? parseInt(req.query.offset, 10) : NaN;
 
     const category: GameCategory | undefined =
       categoryParam && (GAME_CATEGORIES as string[]).includes(categoryParam)
@@ -34,10 +35,10 @@ gamesRouter.get("/", async (req, res, next) => {
       sortParam === "title" ? "title ASC" : "tablet_score DESC, title ASC";
 
     const where: string[] = [];
-    const params: unknown[] = [];
+    const filterParams: unknown[] = [];
     if (category) {
-      params.push(category);
-      where.push(`category = $${params.length}`);
+      filterParams.push(category);
+      where.push(`category = $${filterParams.length}`);
     }
     if (platform === "ios") {
       where.push(`platforms IN ('ios','both')`);
@@ -46,10 +47,29 @@ gamesRouter.get("/", async (req, res, next) => {
     }
     const whereSql = where.length ? `WHERE ${where.join(" AND ")}` : "";
 
-    let limitSql = "";
-    if (!Number.isNaN(limitParam) && limitParam > 0 && limitParam <= 200) {
-      params.push(limitParam);
-      limitSql = `LIMIT $${params.length}`;
+    // Total count for pagination metadata — respects filters, ignores limit/offset.
+    const totalRows = await query<{ count: string }>(
+      `SELECT COUNT(*)::text AS count FROM games ${whereSql}`,
+      filterParams,
+    );
+    const total = Number(totalRows[0]?.count ?? 0);
+
+    const limit =
+      !Number.isNaN(limitParam) && limitParam > 0 && limitParam <= 200
+        ? limitParam
+        : null;
+    const offset =
+      !Number.isNaN(offsetParam) && offsetParam > 0 ? offsetParam : 0;
+
+    const params = [...filterParams];
+    let paginateSql = "";
+    if (limit !== null) {
+      params.push(limit);
+      paginateSql += ` LIMIT $${params.length}`;
+    }
+    if (offset > 0) {
+      params.push(offset);
+      paginateSql += ` OFFSET $${params.length}`;
     }
 
     const rows = await query<Record<string, unknown>>(
@@ -57,11 +77,13 @@ gamesRouter.get("/", async (req, res, next) => {
          FROM games
          ${whereSql}
          ORDER BY ${orderBy}
-         ${limitSql}`,
+         ${paginateSql}`,
       params,
     );
 
     const camelRows = toCamelRows<any>(rows);
+    res.setHeader("X-Total-Count", String(total));
+    res.setHeader("Access-Control-Expose-Headers", "X-Total-Count");
     res.json(camelRows.map(serializeGame));
   } catch (err) {
     next(err);
