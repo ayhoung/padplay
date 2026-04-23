@@ -10,6 +10,7 @@ export interface CategoryLandingConfig {
   title: string;
   description: string;
   intro: string;
+  signals: string[];
 }
 
 export interface CollectionLandingConfig {
@@ -17,6 +18,7 @@ export interface CollectionLandingConfig {
   title: string;
   description: string;
   intro: string;
+  signals: string[];
   category?: GameCategory;
   platform?: PlatformFilter;
 }
@@ -76,21 +78,31 @@ export const categoryLandingConfigs: Record<GameCategory, CategoryLandingConfig>
         ].toLowerCase()} games for iPad and Android tablets.`,
         intro: `These ${CATEGORY_LABELS[
           category
-        ].toLowerCase()} picks earn their place by using tablet space well, not merely scaling up a phone layout.`
+        ].toLowerCase()} picks earn their place by using tablet space well, not merely scaling up a phone layout.`,
+        signals: [
+          "Readable UI that benefits from extra screen space.",
+          "Touch targets and controls that feel deliberate on tablets.",
+          "Full-featured versions instead of compromised phone ports."
+        ]
       }
     ])
   ) as Record<GameCategory, CategoryLandingConfig>;
 
 export function getPlatformLandingCopy(
   platform: PlatformFilter
-): { title: string; description: string; intro: string } {
+): { title: string; description: string; intro: string; signals: string[] } {
   if (platform === "ios") {
     return {
       title: "Best iPad games",
       description:
         "PadPlay's tablet-first leaderboard of the best iPad games, ranked by how well they actually use a larger screen.",
       intro:
-        "This page is for people searching for iPad games that feel native on tablets, with real UI scale, touch fit, and full-game parity."
+        "This page is for people searching for iPad games that feel native on tablets, with real UI scale, touch fit, and full-game parity.",
+      signals: [
+        "Native-feeling layouts that justify an iPad instead of a phone.",
+        "Games that stay legible in long sessions on larger screens.",
+        "Ports that preserve depth rather than stripping systems out."
+      ]
     };
   }
 
@@ -99,7 +111,12 @@ export function getPlatformLandingCopy(
     description:
       "A curated leaderboard of Android tablet games that work well on large screens and avoid stretched-phone compromises.",
     intro:
-      "Android tablet players get the same problem as iPad owners: too many phone-first ports. These are the games that translate cleanly."
+      "Android tablet players get the same problem as iPad owners: too many phone-first ports. These are the games that translate cleanly.",
+    signals: [
+      "Large-screen Android titles with UI that remains comfortable and sharp.",
+      "Games worth recommending even without much Android-tablet editorial coverage.",
+      "Better touch ergonomics and less compromised navigation."
+    ]
   };
 }
 
@@ -111,6 +128,11 @@ export const collectionLandingConfigs: CollectionLandingConfig[] = [
       "A tablet-first shortlist of the best strategy games for iPad, filtered toward games that reward larger screens.",
     intro:
       "Strategy is the clearest proof of tablet quality. If the map, HUD, and planning space don’t improve on a bigger screen, the port usually collapses fast.",
+    signals: [
+      "Map views and overlays that stay readable during long sessions.",
+      "Enough screen room to reduce menu friction and accidental taps.",
+      "Depth and parity with desktop or console versions where possible."
+    ],
     category: "strategy",
     platform: "ios"
   },
@@ -121,6 +143,11 @@ export const collectionLandingConfigs: CollectionLandingConfig[] = [
       "PadPlay's picks for board games on iPad, where readability, spacing, and touch ergonomics matter more than raw graphics.",
     intro:
       "Board game adaptations are either delightful on tablets or painfully cramped. This list favors the ones that respect your hands and your screen.",
+    signals: [
+      "Readable cards, boards, and rule text on a touch surface.",
+      "Turns that feel natural with taps and drags rather than mouse leftovers.",
+      "Less visual clutter than typical phone-first adaptations."
+    ],
     category: "board",
     platform: "ios"
   },
@@ -131,6 +158,11 @@ export const collectionLandingConfigs: CollectionLandingConfig[] = [
       "A curated list of RPG games for Android tablets with stronger UI scale, cleaner touch controls, and fewer phone-port compromises.",
     intro:
       "Android tablet players rarely get dedicated editorial curation. This page narrows the field to RPGs that still feel legible and comfortable on larger displays.",
+    signals: [
+      "Menus, inventories, and combat UIs that don’t collapse on touch.",
+      "Android-first or Android-friendly support instead of neglected ports.",
+      "RPGs that remain playable for long sessions on bigger screens."
+    ],
     category: "rpg",
     platform: "android"
   },
@@ -141,6 +173,11 @@ export const collectionLandingConfigs: CollectionLandingConfig[] = [
       "A device-intent landing page for iPad Pro owners who want games that actually take advantage of a premium tablet screen.",
     intro:
       "People searching for iPad Pro games want titles that feel worthy of the hardware, not just apps that happen to launch. This page leans toward games that make room matter.",
+    signals: [
+      "Games that visually benefit from a premium, high-refresh tablet display.",
+      "Interfaces that feel at home on a larger iPad chassis.",
+      "Long-session games that justify playing on an iPad Pro specifically."
+    ],
     platform: "ios"
   }
 ];

@@ -48,6 +48,7 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
       description={config.description}
       intro={config.intro}
       games={games}
+      signals={config.signals}
     />
   );
 }
