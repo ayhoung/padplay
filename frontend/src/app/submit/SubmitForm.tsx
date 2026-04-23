@@ -9,6 +9,7 @@ import {
   type SubmissionEnrichPreview,
 } from "@padplay/shared-types";
 import { createSubmission, previewSubmission } from "@/lib/api";
+import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
 
 type Step = "urls" | "questionnaire" | "done";
@@ -43,14 +44,27 @@ export function SubmitForm() {
       return;
     }
     setLoading(true);
+    trackEvent("submission_preview_started", {
+      has_app_store_url: Boolean(appStoreUrl),
+      has_play_store_url: Boolean(playStoreUrl),
+    });
     try {
       const data = await previewSubmission({
         appStoreUrl: appStoreUrl || undefined,
         playStoreUrl: playStoreUrl || undefined,
       });
+      trackEvent("submission_preview_succeeded", {
+        guessed_category: data.guessedCategory,
+        has_app_store_url: Boolean(data.appStoreUrl),
+        has_play_store_url: Boolean(data.playStoreUrl),
+      });
       setPreview(data);
       setStep("questionnaire");
     } catch (err) {
+      trackEvent("submission_preview_failed", {
+        has_app_store_url: Boolean(appStoreUrl),
+        has_play_store_url: Boolean(playStoreUrl),
+      });
       setError(err instanceof Error ? err.message : "Could not find that app.");
     } finally {
       setLoading(false);
@@ -61,6 +75,10 @@ export function SubmitForm() {
     e.preventDefault();
     setError(null);
     setLoading(true);
+    trackEvent("submission_submitted", {
+      checked_answer_count: Object.values(answers).filter(Boolean).length,
+      has_pitch: Boolean(userPitch.trim()),
+    });
     try {
       const res = await createSubmission({
         email,
@@ -69,9 +87,17 @@ export function SubmitForm() {
         answers,
         userPitch,
       });
+      trackEvent("submission_completed", {
+        checked_answer_count: Object.values(answers).filter(Boolean).length,
+        has_pitch: Boolean(userPitch.trim()),
+      });
       setSubmitted(res.message);
       setStep("done");
     } catch (err) {
+      trackEvent("submission_failed", {
+        checked_answer_count: Object.values(answers).filter(Boolean).length,
+        has_pitch: Boolean(userPitch.trim()),
+      });
       setError(err instanceof Error ? err.message : "Submission failed.");
     } finally {
       setLoading(false);
@@ -90,6 +116,7 @@ export function SubmitForm() {
             <button
               type="button"
               onClick={() => {
+                trackEvent("submission_restart");
                 setStep("urls");
                 setAppStoreUrl("");
                 setPlayStoreUrl("");
@@ -196,6 +223,7 @@ export function SubmitForm() {
             <button
               type="button"
               onClick={() => {
+                trackEvent("submission_preview_reset");
                 setStep("urls");
                 setPreview(null);
               }}

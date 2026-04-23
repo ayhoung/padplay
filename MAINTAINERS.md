@@ -29,28 +29,28 @@ On the VPS, app dir is `/home/ubuntu/tabletgaming/` (the dir was renamed-in-spir
 
 ## 2. Day-2: deploying code changes
 
+Preferred flow: keep `/home/ubuntu/tabletgaming` as a git checkout on the VPS and deploy by commit, not by `rsync`.
+
 From local (any dev box with SSH access to `ubuntu@13.213.86.62`):
 
 ```bash
 cd path/to/padplay
-# 1. make your changes, commit to git
-# 2. push to VPS
-rsync -az --delete \
-  --exclude node_modules --exclude .next --exclude 'backend/dist' \
-  --exclude 'packages/shared-types/dist' --exclude '*.tsbuildinfo' \
-  --exclude .env --exclude .env.local --exclude .git \
-  ./ ubuntu@13.213.86.62:/home/ubuntu/tabletgaming/
+# 1. make your changes, commit to git, push to GitHub
+git push origin main
 
-# 3. install, build, restart
-ssh ubuntu@13.213.86.62 \
-  'source ~/.nvm/nvm.sh && \
-   cd /home/ubuntu/tabletgaming && \
-   pnpm install && \
-   pnpm -r build && \
-   pm2 restart tabletgaming-backend tabletgaming-frontend'
+# 2. deploy the committed branch on the VPS
+./scripts/deploy.sh
 ```
 
-If the DB schema changed, run `cd backend && pnpm migrate` before restarting. Migrations live in `backend/sql/migrations/NNNN_name.sql` and are idempotent (tracked in a `_migrations` table).
+If the DB schema changed, run:
+
+```bash
+RUN_MIGRATIONS=1 ./scripts/deploy.sh
+```
+
+Migrations live in `backend/sql/migrations/NNNN_name.sql` and are idempotent (tracked in a `_migrations` table).
+
+Fallback only if the server checkout is broken: use `rsync` as a one-off repair path, then switch back to git-based deploys.
 
 After deploying, smoke test:
 

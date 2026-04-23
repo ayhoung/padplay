@@ -1,3 +1,7 @@
+"use client";
+
+import { trackEvent } from "@/lib/analytics";
+
 interface SubmitCtaProps {
   compact?: boolean;
 }
@@ -21,12 +25,22 @@ export function SubmitCta({ compact = false }: SubmitCtaProps) {
       <div className="mt-4 flex flex-wrap gap-3">
         <a
           href="/submit"
+          onClick={() =>
+            trackEvent("submit_cta_click", {
+              placement: compact ? "detail_sidebar" : "marketing_section"
+            })
+          }
           className="inline-flex items-center justify-center rounded-md bg-slate-900 px-4 py-2 text-sm font-medium text-white hover:bg-slate-700"
         >
           Suggest a game
         </a>
         <a
           href="/about"
+          onClick={() =>
+            trackEvent("marketing_methodology_click", {
+              placement: compact ? "detail_sidebar" : "marketing_section"
+            })
+          }
           className="inline-flex items-center justify-center rounded-md border border-slate-300 bg-white px-4 py-2 text-sm font-medium text-slate-700 hover:bg-slate-50"
         >
           Read the scoring method
