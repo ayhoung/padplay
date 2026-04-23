@@ -115,7 +115,33 @@ psql -U postgres -c "ALTER USER tabletgaming WITH PASSWORD 'NEW_PASSWORD';"
 pm2 restart tabletgaming-backend
 ```
 
-## 6. Daily refresh cron
+## 6. Submission queue
+
+Users can submit games at https://padplay.app/submit. Each submission:
+
+- Requires email + at least one store URL + questionnaire answers
+- Gets auto-enriched server-side (iTunes + Play Store → title/dev/icon/screenshots/ratings/price)
+- Is stored in `submissions` table with status=`pending`
+- Rate-limited to 3 per IP per 5 minutes (in-memory, resets on PM2 restart)
+
+### Review queue
+
+Access at `https://padplay.app/admin/submissions`. Paste the admin token (stored in `backend/.env` as `ADMIN_TOKEN`) into the login box — browser remembers it via localStorage.
+
+For each pending submission you can see the submitter's email, the questionnaire answers, their free-text pitch, and the auto-fetched metadata. Click **Approve** to convert it into a real row in the `games` table (slug derived from title, unique-ified if needed) — it appears on the leaderboard immediately. Click **Reject** to dismiss with an optional internal reason.
+
+The computed `tabletScore` comes from the questionnaire (55 base + 6 per "yes", capped at 91). If a submission deserves a higher score, approve it and then bump the row directly in the DB or via a future edit UI.
+
+### Getting / rotating the admin token
+
+```bash
+ssh ubuntu@13.213.86.62 'grep ADMIN_TOKEN /home/ubuntu/tabletgaming/backend/.env'
+# Rotate:
+NEW=$(openssl rand -hex 24)
+ssh ubuntu@13.213.86.62 "sed -i 's|^ADMIN_TOKEN=.*|ADMIN_TOKEN=$NEW|' /home/ubuntu/tabletgaming/backend/.env && pm2 restart tabletgaming-backend"
+```
+
+## 7. Daily refresh cron
 
 Runs at 19:00 UTC (03:00 SGT) via `crontab -l` on the VPS:
 

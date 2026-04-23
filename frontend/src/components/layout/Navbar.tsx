@@ -9,12 +9,18 @@ export function Navbar() {
           <Tablet className="h-5 w-5 text-brand-600" aria-hidden />
           <span>PadPlay</span>
         </Link>
-        <nav className="flex items-center gap-6 text-sm text-slate-600">
+        <nav className="flex items-center gap-5 text-sm text-slate-600">
           <Link href="/" className="hover:text-slate-900">
             Leaderboard
           </Link>
           <Link href="/about" className="hover:text-slate-900">
             About
+          </Link>
+          <Link
+            href="/submit"
+            className="rounded-md bg-brand-600 px-3 py-1.5 text-white font-medium hover:bg-brand-700"
+          >
+            Submit
           </Link>
         </nav>
       </div>

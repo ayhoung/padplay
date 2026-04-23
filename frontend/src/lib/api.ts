@@ -4,7 +4,10 @@ import type {
   GameCategory,
   GameSort,
   GamesResponse,
+  PendingSubmission,
   PlatformFilter,
+  SubmissionCreateRequest,
+  SubmissionEnrichPreview,
 } from "@padplay/shared-types";
 
 const API_BASE = process.env.BACKEND_URL ?? "http://localhost:6004";
@@ -59,4 +62,73 @@ export async function fetchGame(slug: string): Promise<Game | null> {
 export async function fetchCategories(): Promise<CategoriesResponse> {
   const { data } = await apiGet<CategoriesResponse>("/api/categories");
   return data;
+}
+
+// -------------- Submissions --------------
+
+export async function previewSubmission(
+  urls: { appStoreUrl?: string; playStoreUrl?: string },
+): Promise<SubmissionEnrichPreview> {
+  const res = await fetch(`/api/submissions/preview`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(urls),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Preview failed");
+  return data as SubmissionEnrichPreview;
+}
+
+export async function createSubmission(
+  body: SubmissionCreateRequest,
+): Promise<{ id: number; status: string; message: string }> {
+  const res = await fetch(`/api/submissions`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    body: JSON.stringify(body),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Submission failed");
+  return data;
+}
+
+// -------------- Admin --------------
+
+export async function fetchSubmissions(
+  token: string,
+  status: "pending" | "approved" | "rejected" | "all" = "pending",
+): Promise<PendingSubmission[]> {
+  const res = await fetch(`/api/admin/submissions?status=${status}`, {
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Load failed");
+  return data as PendingSubmission[];
+}
+
+export async function approveSubmission(
+  token: string,
+  id: number,
+): Promise<{ slug: string; url: string }> {
+  const res = await fetch(`/api/admin/submissions/${id}/approve`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}` },
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Approve failed");
+  return data;
+}
+
+export async function rejectSubmission(
+  token: string,
+  id: number,
+  reason: string,
+): Promise<void> {
+  const res = await fetch(`/api/admin/submissions/${id}/reject`, {
+    method: "POST",
+    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    body: JSON.stringify({ reason }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Reject failed");
 }
