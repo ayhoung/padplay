@@ -66,8 +66,12 @@ export function LeaderboardFilters({ activeCategory, activePlatform }: Props) {
   ];
 
   return (
-    <div className="space-y-3">
-      <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter by category">
+    <div className="flex flex-wrap items-start justify-between gap-x-6 gap-y-3">
+      <div
+        className="flex flex-wrap gap-2"
+        role="tablist"
+        aria-label="Filter by category"
+      >
         {categoryItems.map((item) => (
           <Link
             key={item.key}
@@ -85,7 +89,11 @@ export function LeaderboardFilters({ activeCategory, activePlatform }: Props) {
           </Link>
         ))}
       </div>
-      <div className="flex flex-wrap gap-2" role="tablist" aria-label="Filter by platform">
+      <div
+        className="flex flex-wrap gap-2 sm:ml-auto"
+        role="tablist"
+        aria-label="Filter by platform"
+      >
         {platformItems.map((item) => (
           <Link
             key={item.key}
