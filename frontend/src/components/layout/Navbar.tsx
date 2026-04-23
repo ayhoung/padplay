@@ -13,6 +13,9 @@ export function Navbar() {
           <Link href="/" className="hover:text-slate-900">
             Leaderboard
           </Link>
+          <Link href="/best-ipad-games" className="hover:text-slate-900">
+            Best iPad Games
+          </Link>
           <Link href="/about" className="hover:text-slate-900">
             About
           </Link>

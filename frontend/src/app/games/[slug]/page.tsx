@@ -9,6 +9,7 @@ import { AdSlot } from "@/components/ads/AdSlot";
 import { StoreRatings } from "@/components/leaderboard/StoreRatings";
 import { ScreenshotGallery } from "@/components/gallery/ScreenshotGallery";
 import { Quotes } from "@/components/gallery/Quotes";
+import { SubmitCta } from "@/components/marketing/SubmitCta";
 
 interface PageProps {
   params: { slug: string };
@@ -149,7 +150,10 @@ export default async function GamePage({ params }: PageProps) {
         </div>
 
         <aside className="md:col-span-1">
+          <SubmitCta compact />
+          <div className="mt-6">
           <AdSlot slot="3333333333" format="rectangle" minHeight={250} />
+          </div>
         </aside>
       </div>
     </div>
