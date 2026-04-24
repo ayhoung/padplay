@@ -24,6 +24,7 @@ export default async function AndroidTabletGamesPage() {
       intro={copy.intro}
       games={games}
       signals={copy.signals}
+      bodyParagraphs={copy.bodyParagraphs}
     />
   );
 }

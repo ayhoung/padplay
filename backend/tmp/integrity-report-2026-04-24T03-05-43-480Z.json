@@ -1,0 +1,1113 @@
+{
+  "checkedAt": "2026-04-24T03:05:43.481Z",
+  "total": 46,
+  "mismatches": 17,
+  "missing": 0,
+  "errors": 0,
+  "reports": [
+    {
+      "slug": "alba-wildlife-adventure",
+      "dbTitle": "Alba: A Wildlife Adventure",
+      "dbDeveloper": "ustwo games",
+      "platforms": "ios",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/alba-a-wildlife-adventure/id1528014682?uo=4",
+        "externalId": "1528014682",
+        "remoteTitle": "Alba: A Wildlife Adventure",
+        "remoteDeveloper": "ustwo Games Ltd",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "alto-odyssey",
+      "dbTitle": "Alto's Odyssey: The Lost City",
+      "dbDeveloper": "Snowman",
+      "platforms": "both",
+      "ios": {
+        "status": "MISMATCH",
+        "url": "https://apps.apple.com/us/app/the-lost-city/id414835676?uo=4",
+        "externalId": "414835676",
+        "remoteTitle": "The Lost City",
+        "remoteDeveloper": "Joe Kauffman",
+        "similarity": 0.6,
+        "note": null
+      },
+      "android": {
+        "status": "MISMATCH",
+        "url": "https://play.google.com/store/apps/details?id=com.noodlecake.altosodyssey&hl=en&gl=us",
+        "externalId": "com.noodlecake.altosodyssey",
+        "remoteTitle": "Alto's Odyssey",
+        "remoteDeveloper": "Noodlecake",
+        "similarity": 0.4,
+        "note": null
+      }
+    },
+    {
+      "slug": "assemble-with-care",
+      "dbTitle": "Assemble with Care",
+      "dbDeveloper": "ustwo games",
+      "platforms": "ios",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/assemble-with-care/id6459060454?uo=4",
+        "externalId": "6459060454",
+        "remoteTitle": "Assemble with Care",
+        "remoteDeveloper": "ustwo Games Ltd",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "balatro",
+      "dbTitle": "Balatro",
+      "dbDeveloper": "LocalThunk / Playstack",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/balatro/id6502453075?uo=4",
+        "externalId": "6502453075",
+        "remoteTitle": "Balatro",
+        "remoteDeveloper": "Playstack Ltd",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "baldurs-gate-enhanced",
+      "dbTitle": "Baldur's Gate: Enhanced Edition",
+      "dbDeveloper": "Beamdog",
+      "platforms": "both",
+      "ios": {
+        "status": "MISMATCH",
+        "url": "https://apps.apple.com/us/app/baldurs-gate/id515114051?uo=4",
+        "externalId": "515114051",
+        "remoteTitle": "Baldur's Gate",
+        "remoteDeveloper": "Overhaul Games Inc.",
+        "similarity": 0.5,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "carcassonne",
+      "dbTitle": "Carcassonne: Tiles & Tactics",
+      "dbDeveloper": "Asmodee Digital",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/carcassonne-tiles-tactics/id1199912736?uo=4",
+        "externalId": "1199912736",
+        "remoteTitle": "Carcassonne – Tiles & Tactics",
+        "remoteDeveloper": "Twin Sails Interactive",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=com.asmodeedigital.carcassonne&hl=en&gl=us",
+        "externalId": "com.asmodeedigital.carcassonne",
+        "remoteTitle": "Carcassonne: Tiles & Tactics",
+        "remoteDeveloper": "Twin Sails Interactive",
+        "similarity": 1,
+        "note": null
+      }
+    },
+    {
+      "slug": "chants-of-sennaar",
+      "dbTitle": "Chants of Sennaar",
+      "dbDeveloper": "Rundisc / Playdigious",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/chants-of-sennaar/id6566195667?uo=4",
+        "externalId": "6566195667",
+        "remoteTitle": "Chants of Sennaar",
+        "remoteDeveloper": "Playdigious",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=com.playdigious.chantsofsennaar&hl=en&gl=us",
+        "externalId": "com.playdigious.chantsofsennaar",
+        "remoteTitle": "Chants of Sennaar",
+        "remoteDeveloper": "Playdigious",
+        "similarity": 1,
+        "note": null
+      }
+    },
+    {
+      "slug": "civilization-vi",
+      "dbTitle": "Civilization VI",
+      "dbDeveloper": "Aspyr Media / Firaxis",
+      "platforms": "both",
+      "ios": {
+        "status": "MISMATCH",
+        "url": "https://apps.apple.com/us/app/sid-meiers-civilization-vi/id1235863443?uo=4",
+        "externalId": "1235863443",
+        "remoteTitle": "Sid Meier's Civilization® VI",
+        "remoteDeveloper": "Aspyr Media (iDP)",
+        "similarity": 0.5,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=com.aspyr.civvi&hl=en&gl=us",
+        "externalId": "com.aspyr.civvi",
+        "remoteTitle": "Civilization VI",
+        "remoteDeveloper": "Aspyr Media, Inc.",
+        "similarity": 1,
+        "note": null
+      }
+    },
+    {
+      "slug": "crashlands-2",
+      "dbTitle": "Crashlands 2",
+      "dbDeveloper": "Butterscotch Shenanigans",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/crashlands-2/id1528199331?uo=4",
+        "externalId": "1528199331",
+        "remoteTitle": "Crashlands 2",
+        "remoteDeveloper": "Butterscotch Shenanigans, Inc.",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "dead-cells",
+      "dbTitle": "Dead Cells",
+      "dbDeveloper": "Motion Twin / Playdigious",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/dead-cells/id1389752090?uo=4",
+        "externalId": "1389752090",
+        "remoteTitle": "Dead Cells",
+        "remoteDeveloper": "Playdigious",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "MISMATCH",
+        "url": "https://play.google.com/store/apps/details?id=com.netflix.NGP.DeadCellsReturnToCastlevania&hl=en&gl=us",
+        "externalId": "com.netflix.NGP.DeadCellsReturnToCastlevania",
+        "remoteTitle": "Dead Cells: Netflix Edition",
+        "remoteDeveloper": "Netflix, Inc.",
+        "similarity": 0.5,
+        "note": null
+      }
+    },
+    {
+      "slug": "disco-elysium",
+      "dbTitle": "Disco Elysium",
+      "dbDeveloper": "ZA/UM",
+      "platforms": "ios",
+      "ios": {
+        "status": "MISMATCH",
+        "url": "https://apps.apple.com/us/app/grim-quest-old-school-rpg/id1539930489?uo=4",
+        "externalId": "1539930489",
+        "remoteTitle": "Grim Quest - Old School RPG",
+        "remoteDeveloper": "Monomyth d.o.o.",
+        "similarity": 0,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "divinity-original-sin-2",
+      "dbTitle": "Divinity: Original Sin 2",
+      "dbDeveloper": "Larian Studios",
+      "platforms": "ios",
+      "ios": {
+        "status": "MISMATCH",
+        "url": "https://apps.apple.com/us/app/diablo-immortal/id1492005122?uo=4",
+        "externalId": "1492005122",
+        "remoteTitle": "Diablo Immortal",
+        "remoteDeveloper": "Blizzard Entertainment, Inc.",
+        "similarity": 0,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "dune-imperium",
+      "dbTitle": "Dune: Imperium",
+      "dbDeveloper": "Dire Wolf Digital",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/dune-imperium/id1575414319?uo=4",
+        "externalId": "1575414319",
+        "remoteTitle": "Dune: Imperium",
+        "remoteDeveloper": "Dire Wolf Digital LLC",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "fantasian-neo-dimension",
+      "dbTitle": "Fantasian Neo Dimension",
+      "dbDeveloper": "Mistwalker",
+      "platforms": "ios",
+      "ios": {
+        "status": "MISMATCH",
+        "url": "https://apps.apple.com/us/app/neo-artifacts-strategy-rpg/id6760394762?uo=4",
+        "externalId": "6760394762",
+        "remoteTitle": "Neo Artifacts - Strategy RPG",
+        "remoteDeveloper": "Long Entertainment Company Limited",
+        "similarity": 0.16666666666666666,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "florence",
+      "dbTitle": "Florence",
+      "dbDeveloper": "Mountains / Annapurna Interactive",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/florence/id1297430468?uo=4",
+        "externalId": "1297430468",
+        "remoteTitle": "Florence",
+        "remoteDeveloper": "Annapurna Games, LLC",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "MISMATCH",
+        "url": "https://play.google.com/store/apps/details?id=florence_nclex_prep.mobile.app&hl=en&gl=us",
+        "externalId": "florence_nclex_prep.mobile.app",
+        "remoteTitle": "Florence | NCLEX Prep",
+        "remoteDeveloper": "Florence Education",
+        "similarity": 0.3333333333333333,
+        "note": null
+      }
+    },
+    {
+      "slug": "galaxy-trucker",
+      "dbTitle": "Galaxy Trucker",
+      "dbDeveloper": "Czech Games Edition",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/galaxy-trucker-pocket/id947402822?uo=4",
+        "externalId": "947402822",
+        "remoteTitle": "Galaxy Trucker Pocket",
+        "remoteDeveloper": "CGE Digital s.r.o.",
+        "similarity": 0.6666666666666666,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "gloomhaven",
+      "dbTitle": "Gloomhaven",
+      "dbDeveloper": "Flaming Fowl Studios / Asmodee Digital",
+      "platforms": "ios",
+      "ios": {
+        "status": "MISMATCH",
+        "url": "https://apps.apple.com/us/app/gloomhaven-campaign-tracker/id1317526482?uo=4",
+        "externalId": "1317526482",
+        "remoteTitle": "Gloomhaven Campaign Tracker",
+        "remoteDeveloper": "Grzegorz Dziembowski",
+        "similarity": 0.3333333333333333,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "gris",
+      "dbTitle": "GRIS",
+      "dbDeveloper": "Devolver / Nomada Studio",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/gris/id1445379072?uo=4",
+        "externalId": "1445379072",
+        "remoteTitle": "GRIS",
+        "remoteDeveloper": "Devolver Digital, Inc.",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "hades",
+      "dbTitle": "Hades",
+      "dbDeveloper": "Supergiant Games",
+      "platforms": "ios",
+      "ios": {
+        "status": "MISMATCH",
+        "url": "https://apps.apple.com/us/app/netflix/id363590051?uo=4",
+        "externalId": "363590051",
+        "remoteTitle": "Netflix",
+        "remoteDeveloper": "Netflix, Inc.",
+        "similarity": 0,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "hearthstone",
+      "dbTitle": "Hearthstone",
+      "dbDeveloper": "Blizzard Entertainment",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/hearthstone/id625257520?uo=4",
+        "externalId": "625257520",
+        "remoteTitle": "Hearthstone",
+        "remoteDeveloper": "Blizzard Entertainment, Inc.",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=com.blizzard.wtcg.hearthstone&hl=en&gl=us",
+        "externalId": "com.blizzard.wtcg.hearthstone",
+        "remoteTitle": "Hearthstone",
+        "remoteDeveloper": "Blizzard Entertainment, Inc.",
+        "similarity": 1,
+        "note": null
+      }
+    },
+    {
+      "slug": "inkulinati",
+      "dbTitle": "Inkulinati",
+      "dbDeveloper": "Yaza Games / Daedalic",
+      "platforms": "ios",
+      "ios": {
+        "status": "MISMATCH",
+        "url": "https://apps.apple.com/us/app/4-surati-1-sitxva/id1320591443?uo=4",
+        "externalId": "1320591443",
+        "remoteTitle": "4 surati 1 sitxva",
+        "remoteDeveloper": "Mesrop Kirakosyan",
+        "similarity": 0,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "into-the-breach",
+      "dbTitle": "Into the Breach",
+      "dbDeveloper": "Subset Games",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/into-the-breach/id1616542180?uo=4",
+        "externalId": "1616542180",
+        "remoteTitle": "Into the Breach",
+        "remoteDeveloper": "Netflix, Inc.",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=com.netflix.NGP.IntoTheBreach&hl=en&gl=us",
+        "externalId": "com.netflix.NGP.IntoTheBreach",
+        "remoteTitle": "Into the Breach",
+        "remoteDeveloper": "Netflix, Inc.",
+        "similarity": 1,
+        "note": null
+      }
+    },
+    {
+      "slug": "kingdom-rush",
+      "dbTitle": "Kingdom Rush Vengeance",
+      "dbDeveloper": "Ironhide Game Studio",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/kingdom-rush-vengeance-td-game/id1248033433?uo=4",
+        "externalId": "1248033433",
+        "remoteTitle": "Kingdom Rush Vengeance TD Game",
+        "remoteDeveloper": "Ironhide S.A.",
+        "similarity": 0.6,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "kingdom-two-crowns",
+      "dbTitle": "Kingdom: Two Crowns",
+      "dbDeveloper": "Noio / Raw Fury",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/kingdom-two-crowns/id1477991646?uo=4",
+        "externalId": "1477991646",
+        "remoteTitle": "Kingdom Two Crowns",
+        "remoteDeveloper": "Raw Fury AB",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "lost-in-play",
+      "dbTitle": "Lost in Play",
+      "dbDeveloper": "Happy Juice Games / Snapbreak",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/lost-in-play/id6449434958?uo=4",
+        "externalId": "6449434958",
+        "remoteTitle": "Lost in Play",
+        "remoteDeveloper": "Snapbreak Games AB",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=com.snapbreak.lip&hl=en&gl=us",
+        "externalId": "com.snapbreak.lip",
+        "remoteTitle": "Lost in Play",
+        "remoteDeveloper": "Snapbreak",
+        "similarity": 1,
+        "note": null
+      }
+    },
+    {
+      "slug": "machinarium",
+      "dbTitle": "Machinarium",
+      "dbDeveloper": "Amanita Design",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/machinarium/id459189186?uo=4",
+        "externalId": "459189186",
+        "remoteTitle": "Machinarium",
+        "remoteDeveloper": "Amanita Design s.r.o.",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=net.Amanita.Design.Machinarium.GP.Demo&hl=en&gl=us",
+        "externalId": "net.Amanita.Design.Machinarium.GP.Demo",
+        "remoteTitle": "Machinarium Demo",
+        "remoteDeveloper": "Amanita Design",
+        "similarity": 0.6,
+        "note": null
+      }
+    },
+    {
+      "slug": "mini-metro",
+      "dbTitle": "Mini Metro",
+      "dbDeveloper": "Dinosaur Polo Club",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/mini-metro/id837860959?uo=4",
+        "externalId": "837860959",
+        "remoteTitle": "Mini Metro",
+        "remoteDeveloper": "Dinosaur Polo Club Limited",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=nz.co.codepoint.minimetro&hl=en&gl=us",
+        "externalId": "nz.co.codepoint.minimetro",
+        "remoteTitle": "Mini Metro",
+        "remoteDeveloper": "Dinosaur Polo Club",
+        "similarity": 1,
+        "note": null
+      }
+    },
+    {
+      "slug": "mini-motorways",
+      "dbTitle": "Mini Motorways",
+      "dbDeveloper": "Dinosaur Polo Club",
+      "platforms": "ios",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/mini-motorways/id1453901000?uo=4",
+        "externalId": "1453901000",
+        "remoteTitle": "Mini Motorways",
+        "remoteDeveloper": "Dinosaur Polo Club Limited",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "monument-valley-2",
+      "dbTitle": "Monument Valley 2",
+      "dbDeveloper": "ustwo games",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/monument-valley-2/id1187265767?uo=4",
+        "externalId": "1187265767",
+        "remoteTitle": "Monument Valley 2",
+        "remoteDeveloper": "ustwo Games Ltd",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=com.ustwo.monumentvalley2&hl=en&gl=us",
+        "externalId": "com.ustwo.monumentvalley2",
+        "remoteTitle": "Monument Valley 2",
+        "remoteDeveloper": "ustwo games",
+        "similarity": 1,
+        "note": null
+      }
+    },
+    {
+      "slug": "monument-valley-3",
+      "dbTitle": "Monument Valley 3",
+      "dbDeveloper": "ustwo Games Ltd",
+      "platforms": "ios",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/monument-valley-3/id6443563379?uo=4",
+        "externalId": "6443563379",
+        "remoteTitle": "Monument Valley 3",
+        "remoteDeveloper": "ustwo Games Ltd",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "oceanhorn-2",
+      "dbTitle": "Oceanhorn 2: Knights of the Lost Realm",
+      "dbDeveloper": "Cornfox & Bros.",
+      "platforms": "ios",
+      "ios": {
+        "status": "MISMATCH",
+        "url": "https://apps.apple.com/us/app/oceanhorn-2/id1141837408?uo=4",
+        "externalId": "1141837408",
+        "remoteTitle": "Oceanhorn 2",
+        "remoteDeveloper": "Cornfox & Brothers Ltd.",
+        "similarity": 0.16666666666666666,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "pocket-city",
+      "dbTitle": "Pocket City",
+      "dbDeveloper": "Codebrew Games",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/pocket-city/id1330451888?uo=4",
+        "externalId": "1330451888",
+        "remoteTitle": "Pocket City",
+        "remoteDeveloper": "Codebrew Games Inc.",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "MISMATCH",
+        "url": "https://play.google.com/store/apps/details?id=com.gahee.taptap&hl=en&gl=us",
+        "externalId": "com.gahee.taptap",
+        "remoteTitle": "Pocket City Builder",
+        "remoteDeveloper": "gaheegame",
+        "similarity": 0.6666666666666666,
+        "note": null
+      }
+    },
+    {
+      "slug": "root-board-game",
+      "dbTitle": "Root",
+      "dbDeveloper": "Dire Wolf Digital",
+      "platforms": "both",
+      "ios": {
+        "status": "MISMATCH",
+        "url": "https://apps.apple.com/us/app/root-better-car-insurance/id1021256908?uo=4",
+        "externalId": "1021256908",
+        "remoteTitle": "Root: Better car insurance",
+        "remoteDeveloper": "Root, Inc.",
+        "similarity": 0.25,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "sayonara-wild-hearts",
+      "dbTitle": "Sayonara Wild Hearts",
+      "dbDeveloper": "Simogo / Annapurna Interactive",
+      "platforms": "ios",
+      "ios": {
+        "status": "MISMATCH",
+        "url": "https://apps.apple.com/us/app/what-the-golf/id1415190483?uo=4",
+        "externalId": "1415190483",
+        "remoteTitle": "WHAT THE GOLF?",
+        "remoteDeveloper": "TEAM17 USA INC",
+        "similarity": 0,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "slay-the-spire",
+      "dbTitle": "Slay the Spire",
+      "dbDeveloper": "Mega Crit / Humble Games",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/slay-the-spire/id1491530147?uo=4",
+        "externalId": "1491530147",
+        "remoteTitle": "Slay the Spire",
+        "remoteDeveloper": "Humble Bundle, Inc.",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=com.humble.SlayTheSpire&hl=en&gl=us",
+        "externalId": "com.humble.SlayTheSpire",
+        "remoteTitle": "Slay the Spire",
+        "remoteDeveloper": "Humble Games",
+        "similarity": 1,
+        "note": null
+      }
+    },
+    {
+      "slug": "stardew-valley",
+      "dbTitle": "Stardew Valley",
+      "dbDeveloper": "ConcernedApe",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/stardew-valley/id1406710800?uo=4",
+        "externalId": "1406710800",
+        "remoteTitle": "Stardew Valley",
+        "remoteDeveloper": "ConcernedApe LLC",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=com.chucklefish.stardewvalley&hl=en&gl=us",
+        "externalId": "com.chucklefish.stardewvalley",
+        "remoteTitle": "Stardew Valley",
+        "remoteDeveloper": "ConcernedApe",
+        "similarity": 1,
+        "note": null
+      }
+    },
+    {
+      "slug": "terraforming-mars",
+      "dbTitle": "Terraforming Mars",
+      "dbDeveloper": "Asmodee Digital / FryxGames",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/terraforming-mars/id1353471030?uo=4",
+        "externalId": "1353471030",
+        "remoteTitle": "Terraforming Mars",
+        "remoteDeveloper": "Twin Sails Interactive",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=se.gotling.tmc&hl=en&gl=us",
+        "externalId": "se.gotling.tmc",
+        "remoteTitle": "Terraforming Mars Companion",
+        "remoteDeveloper": "GoSy Space",
+        "similarity": 0.6666666666666666,
+        "note": null
+      }
+    },
+    {
+      "slug": "the-room-4",
+      "dbTitle": "The Room: Old Sins",
+      "dbDeveloper": "Fireproof Games",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/the-room-old-sins/id1286676015?uo=4",
+        "externalId": "1286676015",
+        "remoteTitle": "The Room: Old Sins",
+        "remoteDeveloper": "Fireproof Studios Limited",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=com.FireproofStudios.TheRoom4&hl=en&gl=us",
+        "externalId": "com.FireproofStudios.TheRoom4",
+        "remoteTitle": "The Room: Old Sins",
+        "remoteDeveloper": "Fireproof Games",
+        "similarity": 1,
+        "note": null
+      }
+    },
+    {
+      "slug": "through-the-ages",
+      "dbTitle": "Through the Ages",
+      "dbDeveloper": "Czech Games Edition",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/through-the-ages/id966245474?uo=4",
+        "externalId": "966245474",
+        "remoteTitle": "Through the Ages",
+        "remoteDeveloper": "CGE Digital s.r.o.",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "townscaper",
+      "dbTitle": "Townscaper",
+      "dbDeveloper": "Oskar Stalberg / Raw Fury",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/townscaper/id1549531491?uo=4",
+        "externalId": "1549531491",
+        "remoteTitle": "Townscaper",
+        "remoteDeveloper": "Raw Fury AB",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "two-point-hospital",
+      "dbTitle": "Two Point Hospital",
+      "dbDeveloper": "Two Point Studios / Sega",
+      "platforms": "both",
+      "ios": {
+        "status": "MISMATCH",
+        "url": "https://apps.apple.com/us/app/hospital-empire-tycoon-idle/id1606698827?uo=4",
+        "externalId": "1606698827",
+        "remoteTitle": "Hospital Empire Tycoon - Idle",
+        "remoteDeveloper": "Codigames SL",
+        "similarity": 0.16666666666666666,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "unpacking",
+      "dbTitle": "Unpacking",
+      "dbDeveloper": "Witch Beam / Humble Games",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/unpacking/id6450058135?uo=4",
+        "externalId": "6450058135",
+        "remoteTitle": "Unpacking",
+        "remoteDeveloper": "Humble Bundle, Inc.",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    },
+    {
+      "slug": "vampire-survivors",
+      "dbTitle": "Vampire Survivors",
+      "dbDeveloper": "Poncle",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/vampire-survivors/id6444525702?uo=4",
+        "externalId": "6444525702",
+        "remoteTitle": "Vampire Survivors",
+        "remoteDeveloper": "Poncle Limited",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=com.poncle.vampiresurvivors&hl=en&gl=us",
+        "externalId": "com.poncle.vampiresurvivors",
+        "remoteTitle": "Vampire Survivors",
+        "remoteDeveloper": "Poncle",
+        "similarity": 1,
+        "note": null
+      }
+    },
+    {
+      "slug": "wildfrost",
+      "dbTitle": "Wildfrost",
+      "dbDeveloper": "Deadpan Games / Chucklefish",
+      "platforms": "both",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/wildfrost/id6462882621?uo=4",
+        "externalId": "6462882621",
+        "remoteTitle": "Wildfrost",
+        "remoteDeveloper": "Chucklefish Limited",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=com.DeadpanGames.Wildfrost&hl=en&gl=us",
+        "externalId": "com.DeadpanGames.Wildfrost",
+        "remoteTitle": "Wildfrost",
+        "remoteDeveloper": "Chucklefish Limited",
+        "similarity": 1,
+        "note": null
+      }
+    },
+    {
+      "slug": "wingspan",
+      "dbTitle": "Wingspan",
+      "dbDeveloper": "Monster Couch",
+      "platforms": "both",
+      "ios": {
+        "status": "MISMATCH",
+        "url": "https://apps.apple.com/us/app/wingspan-the-board-game/id1459520638?uo=4",
+        "externalId": "1459520638",
+        "remoteTitle": "Wingspan: The Board Game",
+        "remoteDeveloper": "Monster Couch sp. z o.o.",
+        "similarity": 0.25,
+        "note": null
+      },
+      "android": {
+        "status": "OK",
+        "url": "https://play.google.com/store/apps/details?id=com.appico.wingspanwwt&hl=en&gl=us",
+        "externalId": "com.appico.wingspanwwt",
+        "remoteTitle": "WingSpan WWT",
+        "remoteDeveloper": "AAPICO Group",
+        "similarity": 0.6,
+        "note": null
+      }
+    },
+    {
+      "slug": "xcom-2-collection",
+      "dbTitle": "XCOM 2 Collection",
+      "dbDeveloper": "Feral Interactive",
+      "platforms": "ios",
+      "ios": {
+        "status": "OK",
+        "url": "https://apps.apple.com/us/app/xcom-2-collection/id1288508230?uo=4",
+        "externalId": "1288508230",
+        "remoteTitle": "XCOM 2 Collection",
+        "remoteDeveloper": "Feral Interactive Ltd",
+        "similarity": 1,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    }
+  ]
+}

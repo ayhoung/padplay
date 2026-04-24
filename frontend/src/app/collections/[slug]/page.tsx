@@ -45,6 +45,7 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
       intro={config.intro}
       games={games}
       signals={config.signals}
+      bodyParagraphs={config.bodyParagraphs}
     />
   );
 }

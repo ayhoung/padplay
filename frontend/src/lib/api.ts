@@ -132,3 +132,45 @@ export async function rejectSubmission(
   const data = await res.json();
   if (!res.ok) throw new Error(data.message ?? "Reject failed");
 }
+
+// -------------- Auth --------------
+
+export async function registerUser(email: string, password: string, wantsUpdates: boolean) {
+  const res = await fetch(`${API_BASE}/api/auth/register`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ email, password, wantsUpdates }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Registration failed");
+  return data.user;
+}
+
+export async function loginUser(email: string, password: string) {
+  const res = await fetch(`${API_BASE}/api/auth/login`, {
+    method: "POST",
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
+    body: JSON.stringify({ email, password }),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Login failed");
+  return data.user;
+}
+
+export async function logoutUser() {
+  await fetch(`${API_BASE}/api/auth/logout`, {
+    method: "POST",
+    credentials: "include",
+  });
+}
+
+export async function fetchCurrentUser() {
+  const res = await fetch(`${API_BASE}/api/auth/me`, {
+    credentials: "include",
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Not authenticated");
+  return data.user;
+}

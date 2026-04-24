@@ -15,8 +15,47 @@ import {
   isValidEmail,
   rateLimitOk,
 } from "../lib/submission";
+import { SESClient, SendEmailCommand } from "@aws-sdk/client-ses";
 
 export const submissionsRouter = Router();
+
+const ses = new SESClient({
+  region: process.env.AWS_REGION || "us-east-1",
+  credentials: {
+    accessKeyId: process.env.AWS_ACCESS_KEY_ID || "",
+    secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || "",
+  },
+});
+
+async function sendNewSubmissionEmail(data: { email: string; title: string; category: string; pitch: string }) {
+  if (!process.env.AWS_ACCESS_KEY_ID) {
+    console.log("Mock Email (SES not configured): New submission from", data.email, "for", data.title);
+    return;
+  }
+  
+  const fromEmail = process.env.SES_FROM_EMAIL || "no-reply@deepflash.co";
+  const command = new SendEmailCommand({
+    Source: fromEmail,
+    Destination: {
+      ToAddresses: ["ayhoung@gmail.com"],
+    },
+    Message: {
+      Subject: { Data: `New PadPlay Submission: ${data.title}` },
+      Body: {
+        Text: {
+          Data: `New App Submitted!\n\nSubmitter: ${data.email}\nApp: ${data.title}\nCategory: ${data.category}\n\nPitch:\n${data.pitch || "No pitch provided."}\n\nReview in the admin panel.`
+        }
+      }
+    }
+  });
+
+  try {
+    await ses.send(command);
+    console.log(`Email notification sent for submission: ${data.title}`);
+  } catch (err) {
+    console.error("Failed to send submission email via SES:", err);
+  }
+}
 
 function getClientIp(req: Request): string {
   const fwd = req.headers["x-forwarded-for"];
@@ -181,6 +220,14 @@ submissionsRouter.post("/", async (req, res, next) => {
         userPitch,
       ],
     );
+
+    // Fire and forget email notification
+    sendNewSubmissionEmail({
+      email,
+      title: enriched.title,
+      category,
+      pitch: userPitch,
+    });
 
     res.status(201).json({
       id: row?.id,

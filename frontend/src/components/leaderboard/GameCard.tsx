@@ -15,8 +15,15 @@ export function GameCard({ game, rank }: Props) {
     game.priceUsd == null ? "Free" : `$${game.priceUsd.toFixed(2)}`;
 
   return (
-    <article className="flex gap-4 rounded-lg border border-slate-200 bg-white p-4 hover:shadow-sm transition-shadow">
-      <div className="flex-shrink-0 flex flex-col items-center gap-2 w-16">
+    <article className="relative flex gap-4 rounded-lg border border-slate-200 bg-white p-4 hover:shadow-sm transition-shadow cursor-pointer">
+      {/* Stretched overlay link — covers the whole row */}
+      <Link
+        href={`/games/${game.slug}`}
+        className="absolute inset-0 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+        aria-label={`${game.title} details`}
+      />
+
+      <div className="relative z-10 flex-shrink-0 flex flex-col items-center gap-2 w-16">
         <span
           className={cn(
             "inline-flex items-center justify-center rounded-full text-sm font-semibold w-8 h-8",
@@ -27,11 +34,7 @@ export function GameCard({ game, rank }: Props) {
           {rank}
         </span>
         {game.iconUrl ? (
-          <Link
-            href={`/games/${game.slug}`}
-            className="rounded-xl focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
-            aria-label={`${game.title} details`}
-          >
+          <div className="relative z-10">
             <Image
               src={game.iconUrl}
               alt=""
@@ -40,21 +43,18 @@ export function GameCard({ game, rank }: Props) {
               className="rounded-xl shadow-sm transition-transform hover:scale-105"
               unoptimized
             />
-          </Link>
+          </div>
         ) : (
           <div className="h-14 w-14 rounded-xl bg-slate-100" aria-hidden />
         )}
       </div>
 
-      <div className="flex-1 min-w-0">
+      <div className="relative z-10 flex-1 min-w-0">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
-            <Link
-              href={`/games/${game.slug}`}
-              className="font-semibold text-slate-900 hover:text-brand-700 truncate block"
-            >
+            <span className="font-semibold text-slate-900 truncate block">
               {game.title}
-            </Link>
+            </span>
             <p className="text-sm text-slate-500 truncate">
               {game.developer} · {game.releaseYear} · {CATEGORY_LABELS[game.category]}
             </p>
@@ -81,7 +81,7 @@ export function GameCard({ game, rank }: Props) {
               href={game.appStoreUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded bg-slate-900 px-2 py-0.5 text-white hover:bg-slate-700"
+              className="relative z-10 inline-flex items-center gap-1 rounded bg-slate-900 px-2 py-0.5 text-white hover:bg-slate-700"
             >
               App Store <ExternalLink className="h-3 w-3" aria-hidden />
             </a>
@@ -91,7 +91,7 @@ export function GameCard({ game, rank }: Props) {
               href={game.playStoreUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="inline-flex items-center gap-1 rounded bg-slate-900 px-2 py-0.5 text-white hover:bg-slate-700"
+              className="relative z-10 inline-flex items-center gap-1 rounded bg-slate-900 px-2 py-0.5 text-white hover:bg-slate-700"
             >
               Play Store <ExternalLink className="h-3 w-3" aria-hidden />
             </a>

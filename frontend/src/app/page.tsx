@@ -9,7 +9,7 @@ import { LeaderboardFilters } from "@/components/leaderboard/LeaderboardFilters"
 import { GameCard } from "@/components/leaderboard/GameCard";
 import { Pagination } from "@/components/leaderboard/Pagination";
 import { AdSlot } from "@/components/ads/AdSlot";
-import { DiscoveryLinks } from "@/components/marketing/DiscoveryLinks";
+
 import { SubmitCta } from "@/components/marketing/SubmitCta";
 
 export const metadata: Metadata = {
@@ -88,11 +88,6 @@ export default async function Home({ searchParams }: HomeProps) {
           — not just whether it runs. Zero tolerance for stretched iPhone apps.
         </p>
       </section>
-
-      <div className="mb-8">
-        <DiscoveryLinks />
-      </div>
-
       <div className="mb-6">
         <AdSlot slot="1111111111" format="horizontal" className="mb-6" minHeight={90} />
         <LeaderboardFilters activeCategory={category} activePlatform={platform} />
