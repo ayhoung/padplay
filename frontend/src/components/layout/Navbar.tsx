@@ -21,16 +21,10 @@ export function Navbar() {
             <span>PadPlay</span>
           </Link>
           <nav className="flex items-center gap-5 text-sm text-slate-600">
-            <Link href="/" className="hover:text-slate-900">
-              Leaderboard
-            </Link>
-            <Link href="/best-ipad-games" className="hover:text-slate-900">
-              Best iPad Games
-            </Link>
             <Link href="/about" className="hover:text-slate-900">
               About
             </Link>
-            
+
             <div className="h-4 w-px bg-slate-200 mx-1" />
 
             {user ? (

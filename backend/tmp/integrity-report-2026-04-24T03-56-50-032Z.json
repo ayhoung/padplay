@@ -1,0 +1,33 @@
+{
+  "checkedAt": "2026-04-24T03:56:50.034Z",
+  "total": 1,
+  "mismatches": 0,
+  "missing": 0,
+  "errors": 0,
+  "reports": [
+    {
+      "slug": "divinity-original-sin-2",
+      "dbTitle": "Divinity: Original Sin 2",
+      "dbDeveloper": "Larian Studios",
+      "platforms": "ios",
+      "ios": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      },
+      "android": {
+        "status": "ABSENT",
+        "url": null,
+        "externalId": null,
+        "remoteTitle": null,
+        "remoteDeveloper": null,
+        "similarity": null,
+        "note": null
+      }
+    }
+  ]
+}

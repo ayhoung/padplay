@@ -33,7 +33,7 @@ async function sendNewSubmissionEmail(data: { email: string; title: string; cate
     return;
   }
   
-  const fromEmail = process.env.SES_FROM_EMAIL || "no-reply@deepflash.co";
+  const fromEmail = process.env.SES_FROM_EMAIL || "no-reply@padplay.app";
   const command = new SendEmailCommand({
     Source: fromEmail,
     Destination: {

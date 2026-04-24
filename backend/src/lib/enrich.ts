@@ -1,4 +1,7 @@
 import type { UserQuote } from "@padplay/shared-types";
+import { isSameGame } from "./similarity";
+
+export { normalize } from "./similarity";
 
 export type GplayAppFn = (opts: { appId: string; country?: string }) => Promise<{
   score?: number;
@@ -85,20 +88,6 @@ export function extractAndroidAppId(url: string | null | undefined): string | nu
   }
 }
 
-export function normalize(str: string): string {
-  return str.toLowerCase().replace(/[^a-z0-9]/g, "").trim();
-}
-
-export function titlesMatch(a: string, b: string): boolean {
-  const na = normalize(a);
-  const nb = normalize(b);
-  if (!na || !nb) return false;
-  if (na === nb) return true;
-  const short = na.length < nb.length ? na : nb;
-  const long = na.length < nb.length ? nb : na;
-  return short.length >= 8 && long.includes(short);
-}
-
 export async function itunesLookup(trackId: string): Promise<ITunesResult | null> {
   const res = await fetch(
     `https://itunes.apple.com/lookup?id=${trackId}&country=us`,
@@ -108,7 +97,10 @@ export async function itunesLookup(trackId: string): Promise<ITunesResult | null
   return data.results?.[0] ?? null;
 }
 
-export async function itunesSearch(title: string): Promise<ITunesResult | null> {
+export async function itunesSearch(
+  title: string,
+  developer?: string | null,
+): Promise<ITunesResult | null> {
   const q = encodeURIComponent(title);
   const res = await fetch(
     `https://itunes.apple.com/search?term=${q}&entity=software&country=us&limit=5`,
@@ -116,8 +108,19 @@ export async function itunesSearch(title: string): Promise<ITunesResult | null> 
   if (!res.ok) return null;
   const data = (await res.json()) as { resultCount: number; results: ITunesResult[] };
   const results = data.results ?? [];
-  const match = results.find((r) => r.trackName && titlesMatch(r.trackName, title));
-  return match ?? results[0] ?? null;
+  const match = results.find(
+    (r) =>
+      r.trackName &&
+      isSameGame({
+        dbTitle: title,
+        remoteTitle: r.trackName,
+        dbDeveloper: developer ?? null,
+        remoteDeveloper: r.sellerName ?? r.artistName ?? null,
+      }).ok,
+  );
+  // Deliberately NO `?? results[0]` fallback — that's what let wrong games
+  // overwrite correct URLs. If no result passes strict match, return null.
+  return match ?? null;
 }
 
 interface ITunesReview {

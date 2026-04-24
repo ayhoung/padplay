@@ -1,5 +1,6 @@
 import "dotenv/config";
 import { pool } from "../lib/db";
+import { isSameGame } from "../lib/similarity";
 import type { UserQuote } from "@padplay/shared-types";
 
 type GplayAppFn = (opts: { appId: string; country?: string }) => Promise<{
@@ -81,20 +82,6 @@ function extractAndroidAppId(url: string | null): string | null {
   }
 }
 
-function normalize(str: string): string {
-  return str.toLowerCase().replace(/[^a-z0-9]/g, "").trim();
-}
-
-function titlesMatch(a: string, b: string): boolean {
-  const na = normalize(a);
-  const nb = normalize(b);
-  if (!na || !nb) return false;
-  if (na === nb) return true;
-  const short = na.length < nb.length ? na : nb;
-  const long = na.length < nb.length ? nb : na;
-  return short.length >= 8 && long.includes(short);
-}
-
 async function itunesLookup(trackId: string): Promise<ITunesResult | null> {
   const res = await fetch(
     `https://itunes.apple.com/lookup?id=${trackId}&country=us`,
@@ -104,7 +91,10 @@ async function itunesLookup(trackId: string): Promise<ITunesResult | null> {
   return data.results?.[0] ?? null;
 }
 
-async function itunesSearch(title: string): Promise<ITunesResult | null> {
+async function itunesSearch(
+  title: string,
+  developer: string,
+): Promise<ITunesResult | null> {
   const q = encodeURIComponent(title);
   const res = await fetch(
     `https://itunes.apple.com/search?term=${q}&entity=software&country=us&limit=5`,
@@ -112,8 +102,19 @@ async function itunesSearch(title: string): Promise<ITunesResult | null> {
   if (!res.ok) return null;
   const data = (await res.json()) as { resultCount: number; results: ITunesResult[] };
   const results = data.results ?? [];
-  const match = results.find((r) => r.trackName && titlesMatch(r.trackName, title));
-  return match ?? results[0] ?? null;
+  const match = results.find(
+    (r) =>
+      r.trackName &&
+      isSameGame({
+        dbTitle: title,
+        remoteTitle: r.trackName,
+        dbDeveloper: developer,
+        remoteDeveloper: r.sellerName ?? r.artistName ?? null,
+      }).ok,
+  );
+  // No `?? results[0]` fallback: accepting a random top hit is how wrong
+  // games (Diablo Immortal, WHAT THE GOLF?, etc.) clobbered correct URLs.
+  return match ?? null;
 }
 
 interface ITunesReview {
@@ -169,18 +170,35 @@ interface PlatformData {
 async function fetchIos(
   existingUrl: string | null,
   title: string,
+  developer: string,
 ): Promise<PlatformData | null> {
   let result: ITunesResult | null = null;
   const trackId = extractIosTrackId(existingUrl);
   if (trackId) {
-    result = await itunesLookup(trackId);
-    const titleOk = result?.trackName && titlesMatch(result.trackName, title);
-    if (!result || !titleOk || (!result.averageUserRating && !result.userRatingCount)) {
-      const searched = await itunesSearch(title);
-      if (searched) result = searched;
+    const looked = await itunesLookup(trackId);
+    const match = looked?.trackName
+      ? isSameGame({
+          dbTitle: title,
+          remoteTitle: looked.trackName,
+          dbDeveloper: developer,
+          remoteDeveloper: looked.sellerName ?? looked.artistName ?? null,
+        })
+      : null;
+    if (match?.ok) {
+      result = looked;
+      if (!looked?.averageUserRating && !looked?.userRatingCount) {
+        // We have the right product but stale ratings — refresh from search.
+        const searched = await itunesSearch(title, developer);
+        if (searched) result = searched;
+      }
+    } else {
+      // Stored trackId resolves to a different product (or nothing). Try
+      // to recover by searching, but isSameGame inside itunesSearch will
+      // reject anything that doesn't match on title+developer.
+      result = await itunesSearch(title, developer);
     }
   } else {
-    result = await itunesSearch(title);
+    result = await itunesSearch(title, developer);
   }
   if (!result) return null;
 
@@ -214,7 +232,14 @@ async function fetchAndroid(
   const hydrate = async (id: string): Promise<PlatformData | null> => {
     try {
       const r = await app({ appId: id, country: "us" });
-      if (!r.title || !titlesMatch(r.title, title)) return null;
+      if (!r.title) return null;
+      const match = isSameGame({
+        dbTitle: title,
+        remoteTitle: r.title,
+        dbDeveloper: developer,
+        remoteDeveloper: r.developer ?? null,
+      });
+      if (!match.ok) return null;
       return {
         rating: r.score ?? null,
         ratingCount: r.ratings ?? null,
@@ -236,7 +261,16 @@ async function fetchAndroid(
 
   try {
     const results = await search({ term: `${title} ${developer}`, num: 5, country: "us" });
-    const match = results.find((r) => titlesMatch(r.title, title)) ?? null;
+    const match =
+      results.find(
+        (r) =>
+          isSameGame({
+            dbTitle: title,
+            remoteTitle: r.title,
+            dbDeveloper: developer,
+            remoteDeveloper: r.developer,
+          }).ok,
+      ) ?? null;
     if (!match) return null;
     return await hydrate(match.appId);
   } catch {
@@ -283,7 +317,7 @@ async function main() {
     const wantAndroid = row.platforms !== "ios";
 
     const [ios, android] = await Promise.all([
-      wantIos ? fetchIos(row.app_store_url, row.title) : Promise.resolve(null),
+      wantIos ? fetchIos(row.app_store_url, row.title, row.developer) : Promise.resolve(null),
       wantAndroid
         ? fetchAndroid(row.play_store_url, row.title, row.developer)
         : Promise.resolve(null),

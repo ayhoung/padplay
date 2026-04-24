@@ -1,10 +1,7 @@
 import "dotenv/config";
 import { pool } from "../lib/db";
-import {
-  itunesLookup,
-  loadGplay,
-  normalize,
-} from "../lib/enrich";
+import { itunesLookup, loadGplay } from "../lib/enrich";
+import { devSimilarity, jaccard, tokenize } from "../lib/similarity";
 
 interface Row {
   slug: string;
@@ -23,39 +20,6 @@ interface Candidate {
   titleSim: number;
   devSim: number;
   score: number;
-}
-
-function tokenize(s: string): Set<string> {
-  return new Set(
-    s
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, " ")
-      .split(/\s+/)
-      .filter((t) => t.length >= 2),
-  );
-}
-function jaccard(a: Set<string>, b: Set<string>): number {
-  if (a.size === 0 && b.size === 0) return 1;
-  let i = 0;
-  for (const t of a) if (b.has(t)) i += 1;
-  const u = a.size + b.size - i;
-  return u === 0 ? 0 : i / u;
-}
-
-function devSimilarity(dbDev: string, remoteDev: string): number {
-  const a = normalize(dbDev);
-  const b = normalize(remoteDev);
-  if (!a || !b) return 0;
-  if (a === b) return 1;
-  // db dev is often "Studio A / Publisher B" — match if either side is
-  // present in the remote
-  const parts = dbDev.split(/[/,&]/).map((p) => normalize(p.trim())).filter(Boolean);
-  for (const p of parts) {
-    if (!p) continue;
-    if (b === p) return 0.95;
-    if (b.includes(p) || p.includes(b)) return 0.85;
-  }
-  return jaccard(tokenize(dbDev), tokenize(remoteDev));
 }
 
 async function itunesSearchMany(term: string, limit = 10): Promise<any[]> {

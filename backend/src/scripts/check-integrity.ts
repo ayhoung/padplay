@@ -7,8 +7,8 @@ import {
   extractIosTrackId,
   itunesLookup,
   loadGplay,
-  normalize,
 } from "../lib/enrich";
+import { isSameGame } from "../lib/similarity";
 
 type Status = "OK" | "MISMATCH" | "MISSING" | "ABSENT" | "ERROR";
 
@@ -40,61 +40,14 @@ interface Row {
   play_store_url: string | null;
 }
 
-function tokenize(str: string): Set<string> {
-  return new Set(
-    str
-      .toLowerCase()
-      .replace(/[^a-z0-9\s]/g, " ")
-      .split(/\s+/)
-      .filter((t) => t.length >= 2),
-  );
-}
-
-function jaccard(a: Set<string>, b: Set<string>): number {
-  if (a.size === 0 && b.size === 0) return 1;
-  let intersect = 0;
-  for (const t of a) if (b.has(t)) intersect += 1;
-  const union = a.size + b.size - intersect;
-  return union === 0 ? 0 : intersect / union;
-}
-
-/**
- * Conservative title matcher. Returns { ok, similarity } where `ok = true`
- * means we're confident the remote product is the same game as the DB row.
- * The existing `titlesMatch()` in lib/enrich.ts is too lax (bare substring
- * match) and is how wrong URLs got into the DB in the first place — don't
- * reuse it here.
- */
 function compareTitles(
   dbTitle: string,
   remoteTitle: string,
   dbDeveloper: string | null,
   remoteDeveloper: string | null,
 ): { ok: boolean; similarity: number } {
-  const nDb = normalize(dbTitle);
-  const nRemote = normalize(remoteTitle);
-  if (!nDb || !nRemote) return { ok: false, similarity: 0 };
-  if (nDb === nRemote) return { ok: true, similarity: 1 };
-
-  const shorter = nDb.length < nRemote.length ? nDb : nRemote;
-  const longer = nDb.length < nRemote.length ? nRemote : nDb;
-  const prefixMatch =
-    longer.startsWith(shorter) && shorter.length / longer.length >= 0.6;
-
-  const sim = jaccard(tokenize(dbTitle), tokenize(remoteTitle));
-
-  const devsMatch =
-    !!dbDeveloper &&
-    !!remoteDeveloper &&
-    normalize(dbDeveloper) === normalize(remoteDeveloper);
-  const devsKnownDifferent =
-    !!dbDeveloper &&
-    !!remoteDeveloper &&
-    normalize(dbDeveloper) !== normalize(remoteDeveloper);
-
-  const threshold = devsMatch ? 0.5 : devsKnownDifferent ? 0.8 : 0.7;
-  const ok = prefixMatch || sim >= threshold;
-  return { ok, similarity: Math.max(sim, prefixMatch ? 0.6 : 0) };
+  const r = isSameGame({ dbTitle, remoteTitle, dbDeveloper, remoteDeveloper });
+  return { ok: r.ok, similarity: r.confidence };
 }
 
 async function checkIos(row: Row): Promise<PlatformReport> {

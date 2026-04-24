@@ -15,15 +15,15 @@ export function GameCard({ game, rank }: Props) {
     game.priceUsd == null ? "Free" : `$${game.priceUsd.toFixed(2)}`;
 
   return (
-    <article className="relative flex gap-4 rounded-lg border border-slate-200 bg-white p-4 hover:shadow-sm transition-shadow cursor-pointer">
+    <article className="group relative flex gap-4 rounded-lg border border-slate-200 bg-white p-4 hover:shadow-sm transition-shadow">
       {/* Stretched overlay link — covers the whole row */}
       <Link
         href={`/games/${game.slug}`}
-        className="absolute inset-0 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
+        className="absolute inset-0 z-0 rounded-lg focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
         aria-label={`${game.title} details`}
       />
 
-      <div className="relative z-10 flex-shrink-0 flex flex-col items-center gap-2 w-16">
+      <div className="flex-shrink-0 flex flex-col items-center gap-2 w-16">
         <span
           className={cn(
             "inline-flex items-center justify-center rounded-full text-sm font-semibold w-8 h-8",
@@ -34,13 +34,13 @@ export function GameCard({ game, rank }: Props) {
           {rank}
         </span>
         {game.iconUrl ? (
-          <div className="relative z-10">
+          <div>
             <Image
               src={game.iconUrl}
               alt=""
               width={56}
               height={56}
-              className="rounded-xl shadow-sm transition-transform hover:scale-105"
+              className="rounded-xl shadow-sm transition-transform group-hover:scale-105"
               unoptimized
             />
           </div>
@@ -49,7 +49,7 @@ export function GameCard({ game, rank }: Props) {
         )}
       </div>
 
-      <div className="relative z-10 flex-1 min-w-0">
+      <div className="flex-1 min-w-0">
         <div className="flex items-start justify-between gap-3">
           <div className="min-w-0">
             <span className="font-semibold text-slate-900 truncate block">
