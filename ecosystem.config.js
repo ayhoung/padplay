@@ -1,19 +1,19 @@
 module.exports = {
   apps: [
     {
-      name: 'tabletgaming-backend',
+      name: 'padplay-backend',
       script: 'pnpm',
       args: 'start',
-      cwd: '/home/ubuntu/tabletgaming/backend',
+      cwd: '/home/ubuntu/padplay/backend',
       env: {
         NODE_ENV: 'production'
       }
     },
     {
-      name: 'tabletgaming-frontend',
+      name: 'padplay-frontend',
       script: 'pnpm',
       args: 'start --port 6003',
-      cwd: '/home/ubuntu/tabletgaming/frontend',
+      cwd: '/home/ubuntu/padplay/frontend',
       env: {
         NODE_ENV: 'production'
       }

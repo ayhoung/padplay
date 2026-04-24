@@ -3,7 +3,7 @@ set -euo pipefail
 
 HOST="${HOST:-ubuntu@13.213.86.62}"
 BASE_DIR="${BASE_DIR:-/home/ubuntu}"
-APP_LINK="${APP_LINK:-$BASE_DIR/tabletgaming}"
+APP_LINK="${APP_LINK:-$BASE_DIR/padplay}"
 RELEASES_DIR="${RELEASES_DIR:-$BASE_DIR/releases}"
 SHARED_DIR="${SHARED_DIR:-$BASE_DIR/shared}"
 BRANCH="${BRANCH:-main}"
@@ -33,7 +33,8 @@ ssh "$HOST" "source ~/.nvm/nvm.sh && \
   echo \"🏗️ Building application...\" && \
   pnpm -r build && \
   echo \"🔄 Swapping production symlink...\" && \
-  ln -sfn \$NEW_RELEASE_DIR $APP_LINK && \
+  rm -rf $APP_LINK && \
+  ln -sfnT \$NEW_RELEASE_DIR $APP_LINK && \
   echo \"♻️ Reloading PM2...\" && \
   (pm2 reload $APP_LINK/ecosystem.config.js --update-env || pm2 start $APP_LINK/ecosystem.config.js) && \
   echo \"🧹 Cleaning up old releases...\" && \
