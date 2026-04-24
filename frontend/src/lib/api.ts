@@ -1,4 +1,8 @@
 import type {
+  AdminGrantRoleRequest,
+  AdminUpdateRoleRequest,
+  AdminUsersListResponse,
+  AdminUser,
   CategoriesResponse,
   Game,
   GameCategory,
@@ -138,6 +142,61 @@ export async function rejectSubmission(
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.message ?? "Reject failed");
+}
+
+export async function fetchAdminUsers(token: string | null): Promise<AdminUser[]> {
+  const res = await fetch(`/api/admin/users`, {
+    credentials: "include",
+    headers: adminHeaders(token),
+  });
+  const data = (await res.json()) as AdminUsersListResponse & { message?: string };
+  if (!res.ok) throw new Error(data.message ?? "Load users failed");
+  return data.users;
+}
+
+export async function grantAdminRole(
+  token: string | null,
+  body: AdminGrantRoleRequest,
+): Promise<AdminUser> {
+  const res = await fetch(`/api/admin/users/roles`, {
+    method: "POST",
+    credentials: "include",
+    headers: adminHeaders(token, { "Content-Type": "application/json" }),
+    body: JSON.stringify(body),
+  });
+  const data = (await res.json()) as { user?: AdminUser; message?: string };
+  if (!res.ok || !data.user) throw new Error(data.message ?? "Grant failed");
+  return data.user;
+}
+
+export async function updateAdminRole(
+  token: string | null,
+  id: number,
+  body: AdminUpdateRoleRequest,
+): Promise<AdminUser> {
+  const res = await fetch(`/api/admin/users/${id}/role`, {
+    method: "PATCH",
+    credentials: "include",
+    headers: adminHeaders(token, { "Content-Type": "application/json" }),
+    body: JSON.stringify(body),
+  });
+  const data = (await res.json()) as { user?: AdminUser; message?: string };
+  if (!res.ok || !data.user) throw new Error(data.message ?? "Update failed");
+  return data.user;
+}
+
+export async function revokeAdminRole(
+  token: string | null,
+  id: number,
+): Promise<AdminUser> {
+  const res = await fetch(`/api/admin/users/${id}/role`, {
+    method: "DELETE",
+    credentials: "include",
+    headers: adminHeaders(token),
+  });
+  const data = (await res.json()) as { user?: AdminUser; message?: string };
+  if (!res.ok || !data.user) throw new Error(data.message ?? "Revoke failed");
+  return data.user;
 }
 
 // -------------- Auth --------------

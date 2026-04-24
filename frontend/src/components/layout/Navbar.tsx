@@ -11,8 +11,6 @@ export function Navbar() {
   const [isSubmitModalOpen, setIsSubmitModalOpen] = useState(false);
   const [isAuthModalOpen, setIsAuthModalOpen] = useState(false);
   const { user, logout } = useAuth();
-  
-  console.log("Navbar render:", { user, isAuthModalOpen, isSubmitModalOpen });
 
   return (
     <>
@@ -50,12 +48,20 @@ export function Navbar() {
                     Submit an App
                   </button>
                   {user.isAdmin && (
-                    <Link
-                      href="/admin/submissions"
-                      className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-brand-600 transition-colors"
-                    >
-                      Admin · Submissions
-                    </Link>
+                    <>
+                      <Link
+                        href="/admin/submissions"
+                        className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-brand-600 transition-colors"
+                      >
+                        Admin · Submissions
+                      </Link>
+                      <Link
+                        href="/admin/users"
+                        className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-brand-600 transition-colors"
+                      >
+                        Admin · Users
+                      </Link>
+                    </>
                   )}
                   <div className="h-px bg-slate-100 my-1" />
                   <button
@@ -70,7 +76,6 @@ export function Navbar() {
               <div className="flex items-center gap-5">
                 <button
                   onClick={() => {
-                    console.log("Login button clicked!");
                     setIsAuthModalOpen(true);
                   }}
                   className="font-medium hover:text-slate-900"
@@ -79,7 +84,6 @@ export function Navbar() {
                 </button>
                 <button
                   onClick={() => {
-                    console.log("Submit button clicked!");
                     setIsSubmitModalOpen(true);
                   }}
                   className="rounded-md bg-brand-600 px-3 py-1.5 text-white font-medium hover:bg-brand-700 focus:outline-none focus-visible:ring-2 focus-visible:ring-brand-500"
