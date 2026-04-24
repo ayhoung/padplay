@@ -4,6 +4,7 @@ import jwt from "jsonwebtoken";
 import { z } from "zod";
 import { queryOne, pool } from "../lib/db";
 import { requireUser } from "../middleware/auth";
+import { isAdminEmail } from "../lib/admin-emails";
 
 export const authRouter = Router();
 
@@ -41,19 +42,30 @@ authRouter.post("/register", async (req, res, next) => {
     }
 
     const passwordHash = await bcrypt.hash(password, 10);
-    
-    const newUser = await queryOne<{ id: number; email: string; wants_updates: boolean }>(
-      `INSERT INTO users (email, password_hash, wants_updates) VALUES ($1, $2, $3) RETURNING id, email, wants_updates`,
-      [email, passwordHash, wantsUpdates]
+
+    const newUser = await queryOne<{ id: number; email: string; wants_updates: boolean; is_admin: boolean }>(
+      `INSERT INTO users (email, password_hash, wants_updates, is_admin) VALUES ($1, $2, $3, $4) RETURNING id, email, wants_updates, is_admin`,
+      [email, passwordHash, wantsUpdates, isAdminEmail(email)]
     );
 
     if (!newUser) throw new Error("Failed to insert user");
 
     const secret = process.env.JWT_SECRET || "supersecret123";
-    const token = jwt.sign({ userId: newUser.id, email: newUser.email }, secret, { expiresIn: "30d" });
+    const token = jwt.sign(
+      { userId: newUser.id, email: newUser.email, isAdmin: newUser.is_admin },
+      secret,
+      { expiresIn: "30d" },
+    );
 
     res.cookie("token", token, cookieOptions);
-    res.status(201).json({ user: { id: newUser.id, email: newUser.email, wantsUpdates: newUser.wants_updates } });
+    res.status(201).json({
+      user: {
+        id: newUser.id,
+        email: newUser.email,
+        wantsUpdates: newUser.wants_updates,
+        isAdmin: newUser.is_admin,
+      },
+    });
   } catch (err) {
     next(err);
   }
@@ -68,8 +80,8 @@ authRouter.post("/login", async (req, res, next) => {
     }
     const { email, password } = parsed.data;
 
-    const user = await queryOne<{ id: number; email: string; password_hash: string; wants_updates: boolean }>(
-      `SELECT id, email, password_hash, wants_updates FROM users WHERE email = $1`,
+    const user = await queryOne<{ id: number; email: string; password_hash: string; wants_updates: boolean; is_admin: boolean }>(
+      `SELECT id, email, password_hash, wants_updates, is_admin FROM users WHERE email = $1`,
       [email]
     );
 
@@ -84,11 +96,27 @@ authRouter.post("/login", async (req, res, next) => {
       return;
     }
 
+    if (!user.is_admin && isAdminEmail(user.email)) {
+      await pool.query(`UPDATE users SET is_admin = true WHERE id = $1`, [user.id]);
+      user.is_admin = true;
+    }
+
     const secret = process.env.JWT_SECRET || "supersecret123";
-    const token = jwt.sign({ userId: user.id, email: user.email }, secret, { expiresIn: "30d" });
+    const token = jwt.sign(
+      { userId: user.id, email: user.email, isAdmin: user.is_admin },
+      secret,
+      { expiresIn: "30d" },
+    );
 
     res.cookie("token", token, cookieOptions);
-    res.json({ user: { id: user.id, email: user.email, wantsUpdates: user.wants_updates } });
+    res.json({
+      user: {
+        id: user.id,
+        email: user.email,
+        wantsUpdates: user.wants_updates,
+        isAdmin: user.is_admin,
+      },
+    });
   } catch (err) {
     next(err);
   }
@@ -107,8 +135,8 @@ authRouter.get("/me", requireUser, async (req, res, next) => {
       return;
     }
 
-    const user = await queryOne<{ id: number; email: string; wants_updates: boolean }>(
-      `SELECT id, email, wants_updates FROM users WHERE id = $1`,
+    const user = await queryOne<{ id: number; email: string; wants_updates: boolean; is_admin: boolean }>(
+      `SELECT id, email, wants_updates, is_admin FROM users WHERE id = $1`,
       [userId]
     );
 
@@ -117,7 +145,19 @@ authRouter.get("/me", requireUser, async (req, res, next) => {
       return;
     }
 
-    res.json({ user: { id: user.id, email: user.email, wantsUpdates: user.wants_updates } });
+    if (!user.is_admin && isAdminEmail(user.email)) {
+      await pool.query(`UPDATE users SET is_admin = true WHERE id = $1`, [user.id]);
+      user.is_admin = true;
+    }
+
+    res.json({
+      user: {
+        id: user.id,
+        email: user.email,
+        wantsUpdates: user.wants_updates,
+        isAdmin: user.is_admin,
+      },
+    });
   } catch (err) {
     next(err);
   }

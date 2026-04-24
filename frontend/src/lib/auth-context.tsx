@@ -7,6 +7,7 @@ export interface User {
   id: number;
   email: string;
   wantsUpdates: boolean;
+  isAdmin: boolean;
 }
 
 interface AuthContextType {

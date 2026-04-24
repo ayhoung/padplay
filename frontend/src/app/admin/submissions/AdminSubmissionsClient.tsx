@@ -13,10 +13,14 @@ import {
   fetchSubmissions,
   rejectSubmission,
 } from "@/lib/api";
+import { useAuth } from "@/lib/auth-context";
 
 type StatusFilter = "pending" | "approved" | "rejected" | "all";
 
 export function AdminSubmissionsClient() {
+  const { user, isLoading: authLoading } = useAuth();
+  const isSessionAdmin = user?.isAdmin === true;
+
   const [token, setToken] = useState("");
   const [tokenInput, setTokenInput] = useState("");
   const [status, setStatus] = useState<StatusFilter>("pending");
@@ -24,7 +28,7 @@ export function AdminSubmissionsClient() {
   const [busy, setBusy] = useState<number | null>(null);
   const [error, setError] = useState<string | null>(null);
 
-  // Load token from localStorage on mount
+  // Load token from localStorage on mount (legacy fallback for non-session users)
   useEffect(() => {
     const saved = localStorage.getItem("padplay_admin_token");
     if (saved) {
@@ -33,8 +37,11 @@ export function AdminSubmissionsClient() {
     }
   }, []);
 
+  const authed = isSessionAdmin || Boolean(token);
+  const apiToken = isSessionAdmin ? null : token;
+
   const load = useCallback(
-    async (t: string, s: StatusFilter) => {
+    async (t: string | null, s: StatusFilter) => {
       setError(null);
       try {
         const rows = await fetchSubmissions(t, s);
@@ -48,8 +55,8 @@ export function AdminSubmissionsClient() {
   );
 
   useEffect(() => {
-    if (token) load(token, status);
-  }, [token, status, load]);
+    if (authed) load(apiToken, status);
+  }, [authed, apiToken, status, load]);
 
   function saveToken() {
     setToken(tokenInput);
@@ -59,8 +66,8 @@ export function AdminSubmissionsClient() {
   async function handleApprove(id: number) {
     setBusy(id);
     try {
-      const { slug } = await approveSubmission(token, id);
-      await load(token, status);
+      const { slug } = await approveSubmission(apiToken, id);
+      await load(apiToken, status);
       alert(`Approved → /games/${slug}`);
     } catch (err) {
       alert(err instanceof Error ? err.message : "Approve failed");
@@ -73,8 +80,8 @@ export function AdminSubmissionsClient() {
     const reason = window.prompt("Rejection reason (optional, sent internally):") ?? "";
     setBusy(id);
     try {
-      await rejectSubmission(token, id, reason);
-      await load(token, status);
+      await rejectSubmission(apiToken, id, reason);
+      await load(apiToken, status);
     } catch (err) {
       alert(err instanceof Error ? err.message : "Reject failed");
     } finally {
@@ -82,12 +89,16 @@ export function AdminSubmissionsClient() {
     }
   }
 
-  // No token yet
-  if (!token) {
+  if (authLoading) {
+    return <p className="text-sm text-slate-500">Loading…</p>;
+  }
+
+  // Not a session admin and no token → show token prompt (legacy fallback).
+  if (!authed) {
     return (
       <div className="max-w-md rounded-lg border border-slate-200 bg-white p-6">
         <p className="text-sm text-slate-600 mb-3">
-          Paste admin token to access.
+          Log in as an admin, or paste an admin token.
         </p>
         <input
           type="password"
@@ -129,17 +140,23 @@ export function AdminSubmissionsClient() {
             ),
           )}
         </div>
-        <button
-          type="button"
-          onClick={() => {
-            localStorage.removeItem("padplay_admin_token");
-            setToken("");
-            setTokenInput("");
-          }}
-          className="text-xs text-slate-500 hover:text-slate-700 underline"
-        >
-          Clear token
-        </button>
+        {isSessionAdmin ? (
+          <span className="text-xs text-slate-500">
+            Signed in as <span className="font-mono">{user?.email}</span>
+          </span>
+        ) : (
+          <button
+            type="button"
+            onClick={() => {
+              localStorage.removeItem("padplay_admin_token");
+              setToken("");
+              setTokenInput("");
+            }}
+            className="text-xs text-slate-500 hover:text-slate-700 underline"
+          >
+            Clear token
+          </button>
+        )}
       </div>
 
       {error && (

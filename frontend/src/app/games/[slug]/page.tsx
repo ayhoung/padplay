@@ -30,6 +30,7 @@ export default async function GamePage({ params }: PageProps) {
 
   const priceLabel =
     game.priceUsd == null ? "Free" : `$${game.priceUsd.toFixed(2)}`;
+  const storeUrl = game.appStoreUrl || game.playStoreUrl;
 
   return (
     <div className="mx-auto max-w-4xl px-4 sm:px-6 py-10">
@@ -85,12 +86,30 @@ export default async function GamePage({ params }: PageProps) {
           <StoreRatings game={game} size="md" className="mt-3" />
         </div>
         <div className="flex-shrink-0 text-right">
-          <div className="text-5xl font-bold text-brand-700 leading-none">
-            {game.tabletScore}
-          </div>
-          <div className="text-xs text-slate-400 uppercase tracking-wide">
-            tablet score
-          </div>
+          {storeUrl ? (
+            <a
+              href={storeUrl}
+              target="_blank"
+              rel="noopener noreferrer"
+              className="block hover:opacity-80 transition-opacity"
+            >
+              <div className="text-5xl font-bold text-brand-700 leading-none">
+                {game.tabletScore}
+              </div>
+              <div className="text-xs text-slate-400 uppercase tracking-wide">
+                tablet score
+              </div>
+            </a>
+          ) : (
+            <>
+              <div className="text-5xl font-bold text-brand-700 leading-none">
+                {game.tabletScore}
+              </div>
+              <div className="text-xs text-slate-400 uppercase tracking-wide">
+                tablet score
+              </div>
+            </>
+          )}
         </div>
       </header>
 

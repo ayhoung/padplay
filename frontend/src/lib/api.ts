@@ -94,12 +94,17 @@ export async function createSubmission(
 
 // -------------- Admin --------------
 
+function adminHeaders(token: string | null, extra: Record<string, string> = {}): HeadersInit {
+  return token ? { Authorization: `Bearer ${token}`, ...extra } : extra;
+}
+
 export async function fetchSubmissions(
-  token: string,
+  token: string | null,
   status: "pending" | "approved" | "rejected" | "all" = "pending",
 ): Promise<PendingSubmission[]> {
   const res = await fetch(`/api/admin/submissions?status=${status}`, {
-    headers: { Authorization: `Bearer ${token}` },
+    credentials: "include",
+    headers: adminHeaders(token),
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.message ?? "Load failed");
@@ -107,12 +112,13 @@ export async function fetchSubmissions(
 }
 
 export async function approveSubmission(
-  token: string,
+  token: string | null,
   id: number,
 ): Promise<{ slug: string; url: string }> {
   const res = await fetch(`/api/admin/submissions/${id}/approve`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}` },
+    credentials: "include",
+    headers: adminHeaders(token),
   });
   const data = await res.json();
   if (!res.ok) throw new Error(data.message ?? "Approve failed");
@@ -120,13 +126,14 @@ export async function approveSubmission(
 }
 
 export async function rejectSubmission(
-  token: string,
+  token: string | null,
   id: number,
   reason: string,
 ): Promise<void> {
   const res = await fetch(`/api/admin/submissions/${id}/reject`, {
     method: "POST",
-    headers: { Authorization: `Bearer ${token}`, "Content-Type": "application/json" },
+    credentials: "include",
+    headers: adminHeaders(token, { "Content-Type": "application/json" }),
     body: JSON.stringify({ reason }),
   });
   const data = await res.json();
