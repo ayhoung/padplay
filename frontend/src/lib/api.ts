@@ -136,7 +136,7 @@ export async function rejectSubmission(
 // -------------- Auth --------------
 
 export async function registerUser(email: string, password: string, wantsUpdates: boolean) {
-  const res = await fetch(`${API_BASE}/api/auth/register`, {
+  const res = await fetch(`/api/auth/register`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -148,7 +148,7 @@ export async function registerUser(email: string, password: string, wantsUpdates
 }
 
 export async function loginUser(email: string, password: string) {
-  const res = await fetch(`${API_BASE}/api/auth/login`, {
+  const res = await fetch(`/api/auth/login`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -160,14 +160,14 @@ export async function loginUser(email: string, password: string) {
 }
 
 export async function logoutUser() {
-  await fetch(`${API_BASE}/api/auth/logout`, {
+  await fetch(`/api/auth/logout`, {
     method: "POST",
     credentials: "include",
   });
 }
 
 export async function fetchCurrentUser() {
-  const res = await fetch(`${API_BASE}/api/auth/me`, {
+  const res = await fetch(`/api/auth/me`, {
     credentials: "include",
   });
   const data = await res.json();
