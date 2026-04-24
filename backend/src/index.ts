@@ -12,6 +12,12 @@ import {
   approveSubmission,
   rejectSubmission,
 } from "./routes/submissions";
+import {
+  listAdminUsers,
+  grantAdminRole,
+  updateAdminRole,
+  revokeAdminRole,
+} from "./routes/admin-users";
 import { requireAdmin } from "./middleware/admin";
 import { errorHandler, notFoundHandler } from "./middleware/errors";
 
@@ -39,6 +45,10 @@ adminRouter.use(requireAdmin);
 adminRouter.get("/submissions", listSubmissions);
 adminRouter.post("/submissions/:id/approve", approveSubmission);
 adminRouter.post("/submissions/:id/reject", rejectSubmission);
+adminRouter.get("/users", listAdminUsers);
+adminRouter.post("/users/roles", grantAdminRole);
+adminRouter.patch("/users/:id/role", updateAdminRole);
+adminRouter.delete("/users/:id/role", revokeAdminRole);
 app.use("/api/admin", adminRouter);
 
 app.use(notFoundHandler);

@@ -131,3 +131,25 @@ export interface PendingSubmission {
   createdAt: string;
   reviewedAt: string | null;
 }
+
+// -------------- Admin users / roles --------------
+
+export interface AdminUser {
+  id: number;
+  email: string;
+  wantsUpdates: boolean;
+  isAdmin: boolean;
+  createdAt: string;
+}
+
+export interface AdminUsersListResponse {
+  users: AdminUser[];
+}
+
+export interface AdminGrantRoleRequest {
+  email: string;
+}
+
+export interface AdminUpdateRoleRequest {
+  isAdmin: boolean;
+}
