@@ -16,5 +16,7 @@ ssh "$HOST" "source ~/.nvm/nvm.sh && \
   pnpm -r build && \
   pm2 restart tabletgaming-backend tabletgaming-frontend"
 
+sleep 5
+
 curl -fsS https://padplay.app/api/health
 curl -fsS -o /dev/null https://padplay.app/
