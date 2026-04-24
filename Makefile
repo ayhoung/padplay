@@ -1,4 +1,4 @@
-.PHONY: dev dev-backend dev-frontend dev-tunnel build lint seed migrate
+.PHONY: dev dev-backend dev-frontend dev-tunnel build lint seed migrate deploy
 
 TUNNEL_HOST ?= ubuntu@13.213.86.62
 TUNNEL_PORT ?= 5433
@@ -40,3 +40,6 @@ migrate:
 
 seed:
 	cd backend && pnpm seed
+
+deploy:
+	./scripts/deploy.sh
