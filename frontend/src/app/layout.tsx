@@ -23,6 +23,7 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
+  metadataBase: new URL("https://padplay.app"),
   title: {
     default: "PadPlay — Games built for tablets, not stretched from phones",
     template: "%s | PadPlay",
@@ -47,6 +48,7 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
+    title: "PadPlay — Games built for tablets, not stretched from phones",
     siteName: "PadPlay",
     description:
       "The leaderboard of games genuinely designed for tablets. No stretched phone apps.",

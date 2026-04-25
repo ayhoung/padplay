@@ -18,9 +18,16 @@ interface PageProps {
 export async function generateMetadata({ params }: PageProps): Promise<Metadata> {
   const game = await fetchGame(params.slug);
   if (!game) return { title: "Not found" };
+
+  const ogImage = game.screenshots[0] ?? game.iconUrl ?? undefined;
   return {
     title: `${game.title} — tablet review`,
     description: game.shortDescription,
+    openGraph: {
+      title: `${game.title} — tablet review | PadPlay`,
+      description: game.shortDescription,
+      ...(ogImage ? { images: [{ url: ogImage }] } : {}),
+    },
   };
 }
 
@@ -44,12 +51,22 @@ export default async function GamePage({ params }: PageProps) {
             description: game.shortDescription,
             author: { "@type": "Organization", name: game.developer },
             datePublished: String(game.releaseYear),
-            aggregateRating: {
-              "@type": "AggregateRating",
-              ratingValue: game.tabletScore / 20,
-              bestRating: 5,
-              ratingCount: 1,
-            },
+            ...(game.iconUrl ? { image: game.iconUrl } : {}),
+            ...((game.iosRating && game.iosRatingCount && game.iosRatingCount > 1) ? {
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: game.iosRating,
+                bestRating: 5,
+                ratingCount: game.iosRatingCount,
+              },
+            } : (game.androidRating && game.androidRatingCount && game.androidRatingCount > 1) ? {
+              aggregateRating: {
+                "@type": "AggregateRating",
+                ratingValue: game.androidRating,
+                bestRating: 5,
+                ratingCount: game.androidRatingCount,
+              },
+            } : {}),
           }),
         }}
       />
@@ -66,7 +83,7 @@ export default async function GamePage({ params }: PageProps) {
         {game.iconUrl && (
           <Image
             src={game.iconUrl}
-            alt=""
+            alt={`${game.title} app icon`}
             width={96}
             height={96}
             className="rounded-2xl shadow flex-shrink-0"

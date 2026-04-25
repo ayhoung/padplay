@@ -37,39 +37,39 @@ export function SeoLandingPage({
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(itemListJsonLd) }}
       />
-      <section className="max-w-3xl">
+      <article className="max-w-3xl">
         <h1 className="text-3xl font-bold tracking-tight text-slate-900 sm:text-4xl">
           {title}
         </h1>
         <p className="mt-3 text-base leading-7 text-slate-600">{description}</p>
         <p className="mt-3 text-sm leading-6 text-slate-500">{intro}</p>
-      </section>
 
-      {bodyParagraphs.length > 0 && (
-        <section className="mt-8 max-w-3xl space-y-4">
-          {bodyParagraphs.map((p, i) => (
-            <p key={i} className="text-sm leading-7 text-slate-600">
-              {p}
-            </p>
-          ))}
-        </section>
-      )}
-
-      {signals.length > 0 && (
-        <section className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-6">
-          <h2 className="text-lg font-semibold tracking-tight text-slate-900">
-            What PadPlay is optimizing for on this page
-          </h2>
-          <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
-            {signals.map((signal) => (
-              <li key={signal} className="flex gap-2">
-                <span className="text-brand-700">•</span>
-                <span>{signal}</span>
-              </li>
+        {bodyParagraphs.length > 0 && (
+          <div className="mt-8 space-y-4">
+            {bodyParagraphs.map((p, i) => (
+              <p key={i} className="text-sm leading-7 text-slate-600">
+                {p}
+              </p>
             ))}
-          </ul>
-        </section>
-      )}
+          </div>
+        )}
+
+        {signals.length > 0 && (
+          <div className="mt-6 rounded-2xl border border-slate-200 bg-slate-50 p-6">
+            <h2 className="text-lg font-semibold tracking-tight text-slate-900">
+              What we looked for
+            </h2>
+            <ul className="mt-3 space-y-2 text-sm leading-6 text-slate-600">
+              {signals.map((signal) => (
+                <li key={signal} className="flex gap-2">
+                  <span className="text-brand-700">•</span>
+                  <span>{signal}</span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        )}
+      </article>
 
       <div className="mt-8">
         <ol className="space-y-3">
