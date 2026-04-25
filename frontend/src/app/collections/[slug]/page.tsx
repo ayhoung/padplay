@@ -1,6 +1,6 @@
 import type { Metadata } from "next";
 import { notFound } from "next/navigation";
-import { fetchGames } from "@/lib/api";
+import { fetchGame } from "@/lib/api";
 import {
   collectionLandingConfigs,
   getCollectionLandingConfig
@@ -31,21 +31,22 @@ export default async function CollectionPage({ params }: CollectionPageProps) {
   const config = getCollectionLandingConfig(params.slug);
   if (!config) notFound();
 
-  const { games } = await fetchGames({
-    category: config.category,
-    platform: config.platform,
-    sort: "score",
-    limit: 24
-  });
+  const items = await Promise.all(
+    config.items.map(async (item) => {
+      const game = await fetchGame(item.gameSlug);
+      return { game, blurb: item.blurb };
+    })
+  );
+
+  const validItems = items.filter((item): item is { game: NonNullable<typeof item.game>; blurb: string } => item.game !== null);
 
   return (
     <SeoLandingPage
       title={config.title}
       description={config.description}
-      intro={config.intro}
-      games={games}
-      signals={config.signals}
-      bodyParagraphs={config.bodyParagraphs}
+      context={config.context}
+      scope={config.scope}
+      items={validItems}
     />
   );
 }

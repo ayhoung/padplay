@@ -1,30 +1,33 @@
 import type { Metadata } from "next";
-import { fetchGames } from "@/lib/api";
-import { getPlatformLandingCopy } from "@/lib/seo";
+import { fetchGame } from "@/lib/api";
+import { getPlatformLandingConfig } from "@/lib/seo";
 import { SeoLandingPage } from "@/components/marketing/SeoLandingPage";
 
-const copy = getPlatformLandingCopy("android");
+const config = getPlatformLandingConfig("android");
 
 export const metadata: Metadata = {
-  title: copy.title,
-  description: copy.description
+  title: config.title,
+  description: config.description
 };
 
 export default async function AndroidTabletGamesPage() {
-  const { games } = await fetchGames({
-    platform: "android",
-    sort: "score",
-    limit: 24
-  });
+  const items = await Promise.all(
+    config.items.map(async (item) => {
+      const game = await fetchGame(item.gameSlug);
+      return { game, blurb: item.blurb };
+    })
+  );
+
+  // Filter out any missing games
+  const validItems = items.filter((item): item is { game: NonNullable<typeof item.game>; blurb: string } => item.game !== null);
 
   return (
     <SeoLandingPage
-      title={copy.title}
-      description={copy.description}
-      intro={copy.intro}
-      games={games}
-      signals={copy.signals}
-      bodyParagraphs={copy.bodyParagraphs}
+      title={config.title}
+      description={config.description}
+      context={config.context}
+      scope={config.scope}
+      items={validItems}
     />
   );
 }

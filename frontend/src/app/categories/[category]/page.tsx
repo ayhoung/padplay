@@ -4,7 +4,7 @@ import {
   GAME_CATEGORIES,
   type GameCategory
 } from "@padplay/shared-types";
-import { fetchGames } from "@/lib/api";
+import { fetchGame } from "@/lib/api";
 import { categoryLandingConfigs } from "@/lib/seo";
 import { SeoLandingPage } from "@/components/marketing/SeoLandingPage";
 
@@ -40,16 +40,23 @@ export default async function CategoryPage({ params }: CategoryPageProps) {
   if (!category) notFound();
 
   const config = categoryLandingConfigs[category];
-  const { games } = await fetchGames({ category, sort: "score", limit: 24 });
+  
+  const items = await Promise.all(
+    config.items.map(async (item) => {
+      const game = await fetchGame(item.gameSlug);
+      return { game, blurb: item.blurb };
+    })
+  );
+
+  const validItems = items.filter((item): item is { game: NonNullable<typeof item.game>; blurb: string } => item.game !== null);
 
   return (
     <SeoLandingPage
       title={config.title}
       description={config.description}
-      intro={config.intro}
-      games={games}
-      signals={config.signals}
-      bodyParagraphs={config.bodyParagraphs}
+      context={config.context}
+      scope={config.scope}
+      items={validItems}
     />
   );
 }

@@ -14,7 +14,8 @@
     "check-integrity": "tsx src/scripts/check-integrity.ts",
     "propose-fixes": "tsx src/scripts/propose-fixes.ts",
     "apply-fixes": "tsx src/scripts/apply-fixes.ts",
-    "add-games": "tsx src/scripts/add-games.ts"
+    "add-games": "tsx src/scripts/add-games.ts",
+    "add-games-reddit": "tsx src/scripts/add-games-reddit.ts"
   },
   "dependencies": {
     "@aws-sdk/client-ses": "^3.1036.0",
