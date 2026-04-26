@@ -18,6 +18,11 @@ import {
   updateAdminRole,
   revokeAdminRole,
 } from "./routes/admin-users";
+import {
+  createAdminGame,
+  updateAdminGame,
+  deleteAdminGame,
+} from "./routes/admin-games";
 import { requireAdmin } from "./middleware/admin";
 import { errorHandler, notFoundHandler } from "./middleware/errors";
 
@@ -49,6 +54,9 @@ adminRouter.get("/users", listAdminUsers);
 adminRouter.post("/users/roles", grantAdminRole);
 adminRouter.patch("/users/:id/role", updateAdminRole);
 adminRouter.delete("/users/:id/role", revokeAdminRole);
+adminRouter.post("/games", createAdminGame);
+adminRouter.patch("/games/:slug", updateAdminGame);
+adminRouter.delete("/games/:slug", deleteAdminGame);
 app.use("/api/admin", adminRouter);
 
 app.use(notFoundHandler);

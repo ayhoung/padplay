@@ -8,6 +8,8 @@ import type {
   GameCategory,
   GameSort,
   GamesResponse,
+  GameCreateRequest,
+  GameUpdateRequest,
   PendingSubmission,
   PlatformFilter,
   SubmissionCreateRequest,
@@ -197,6 +199,51 @@ export async function revokeAdminRole(
   const data = (await res.json()) as { user?: AdminUser; message?: string };
   if (!res.ok || !data.user) throw new Error(data.message ?? "Revoke failed");
   return data.user;
+}
+
+export async function createAdminGame(
+  token: string | null,
+  body: GameCreateRequest,
+): Promise<Game> {
+  const res = await fetch(`/api/admin/games`, {
+    method: "POST",
+    credentials: "include",
+    headers: adminHeaders(token, { "Content-Type": "application/json" }),
+    body: JSON.stringify(body),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Create game failed");
+  return data;
+}
+
+export async function updateAdminGame(
+  token: string | null,
+  slug: string,
+  body: GameUpdateRequest,
+): Promise<Game> {
+  const res = await fetch(`/api/admin/games/${slug}`, {
+    method: "PATCH",
+    credentials: "include",
+    headers: adminHeaders(token, { "Content-Type": "application/json" }),
+    body: JSON.stringify(body),
+  });
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Update game failed");
+  return data;
+}
+
+export async function deleteAdminGame(
+  token: string | null,
+  slug: string,
+): Promise<void> {
+  const res = await fetch(`/api/admin/games/${slug}`, {
+    method: "DELETE",
+    credentials: "include",
+    headers: adminHeaders(token),
+  });
+  if (res.status === 204) return;
+  const data = await res.json();
+  if (!res.ok) throw new Error(data.message ?? "Delete game failed");
 }
 
 // -------------- Auth --------------

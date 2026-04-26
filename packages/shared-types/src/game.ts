@@ -60,3 +60,28 @@ export const CATEGORY_LABELS: Record<GameCategory, string> = {
   board: "Board",
   action: "Action",
 };
+
+export interface GameCreateRequest {
+  slug: string;
+  title: string;
+  developer: string;
+  category: GameCategory;
+  platforms: Platform;
+  tabletScore: number;
+  priceUsd?: number | null;
+  shortDescription: string;
+  tabletFeatures?: string[];
+  appStoreUrl?: string | null;
+  playStoreUrl?: string | null;
+  thumbnail: string;
+  iconUrl?: string | null;
+  screenshots?: string[];
+  quotes?: UserQuote[];
+  iosRating?: number | null;
+  iosRatingCount?: number | null;
+  androidRating?: number | null;
+  androidRatingCount?: number | null;
+  releaseYear: number;
+}
+
+export type GameUpdateRequest = Partial<GameCreateRequest>;

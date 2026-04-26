@@ -61,6 +61,12 @@ export function Navbar() {
                       >
                         Admin · Users
                       </Link>
+                      <Link
+                        href="/admin/games"
+                        className="block px-4 py-2 text-sm text-slate-700 hover:bg-slate-50 hover:text-brand-600 transition-colors"
+                      >
+                        Admin · Games
+                      </Link>
                     </>
                   )}
                   <div className="h-px bg-slate-100 my-1" />

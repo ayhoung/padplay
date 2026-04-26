@@ -11,6 +11,7 @@ import {
 import { createSubmission, previewSubmission } from "@/lib/api";
 import { trackEvent } from "@/lib/analytics";
 import { cn } from "@/lib/utils";
+import { useAuth } from "@/lib/auth-context";
 
 type Step = "urls" | "questionnaire" | "done";
 
@@ -40,6 +41,8 @@ export function SubmitModal({ isOpen, onClose }: SubmitModalProps) {
   const [userPitch, setUserPitch] = useState("");
   const [answers, setAnswers] = useState<QuestionnaireAnswers>(EMPTY_ANSWERS);
   const [submitted, setSubmitted] = useState<string | null>(null);
+
+  const { user } = useAuth();
 
   useEffect(() => {
     if (!isOpen) {
@@ -114,7 +117,7 @@ export function SubmitModal({ isOpen, onClose }: SubmitModalProps) {
     });
     try {
       const res = await createSubmission({
-        email,
+        email: user?.email || email,
         appStoreUrl: appStoreUrl || undefined,
         playStoreUrl: playStoreUrl || undefined,
         answers,
@@ -325,18 +328,34 @@ export function SubmitModal({ isOpen, onClose }: SubmitModalProps) {
               </FormField>
 
               <FormField
-                label="Your email"
-                hint="So we can let you know when it's approved. Never published."
+                label="What makes this game great on a tablet?"
+                hint="One or two sentences. Optional."
               >
-                <input
-                  type="email"
-                  required
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                  placeholder="you@example.com"
-                  className={inputClass}
+                <textarea
+                  value={userPitch}
+                  onChange={(e) => setUserPitch(e.target.value)}
+                  rows={3}
+                  maxLength={1000}
+                  placeholder="The map UI finally uses the whole screen, and Apple Pencil makes it feel like drafting on paper…"
+                  className={cn(inputClass, "resize-y")}
                 />
               </FormField>
+
+              {!user && (
+                <FormField
+                  label="Your email"
+                  hint="So we can let you know when it's approved. Never published."
+                >
+                  <input
+                    type="email"
+                    required
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                    placeholder="you@example.com"
+                    className={inputClass}
+                  />
+                </FormField>
+              )}
 
               {error && <ErrorBox>{error}</ErrorBox>}
 
